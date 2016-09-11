@@ -31,3 +31,4 @@ gcov:
 clean:
 	rm *.o main
 	rm *.gc*
+	rm tests/outfile[0-9]

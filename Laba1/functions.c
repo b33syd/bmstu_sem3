@@ -12,17 +12,24 @@
 int ReadDataFromFile(double array[], int *array_length, FILE *file)
 {
 	*array_length=0;
-	int status_work=FILE_IS_NORMAL;
 	
-	while (((fscanf (file, "%lf", &array[*array_length])) != EOF) &&(status_work==OK)) {
+	double temp=0;
+
+	while((fscanf (file, "%lf", &temp)!=EOF))
+	{		
+		if (*array_length<MAX_ARRAY_LENGTH)
+		{
+			array[*array_length]=temp;
+		}
+		else
+		{
+			return FILE_IS_TOO_LARGE;
+		}
+			*array_length=*array_length+1;
 		
-		*array_length=*array_length+1;
-		if(*array_length==MAX_ARRAY_LENGTH)
-			status_work= FILE_IS_TOO_LARGE;
 	}
-
-
-	return status_work; 
+	
+	return FILE_IS_NORMAL; 
 }
 
 //Calculation of the average value of a real array, output error code

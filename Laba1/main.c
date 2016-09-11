@@ -14,10 +14,6 @@
 
 
 
-
-/*this_is_variable
- *ThisIsFunction()*/
-
 int main(int argc, char **argv)
 {	
 	//File size label
