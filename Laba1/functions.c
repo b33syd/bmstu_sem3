@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include "functions.h"
 
-#define MAX_ARRAY_LENGTH 6
+#define MAX_ARRAY_LENGTH 10
 #define FILE_IS_NORMAL 0
 #define FILE_IS_TOO_LARGE 1
+
 #define OK 0
 #define DIVISION_BY_ZERO -3
 
@@ -12,13 +13,15 @@ int ReadDataFromFile(double array[], int *array_length, FILE *file)
 {
 	*array_length=0;
 	int status_work=FILE_IS_NORMAL;
-	printf("01\n");
+	
 	while (((fscanf (file, "%lf", &array[*array_length])) != EOF) &&(status_work==OK)) {
-		printf("02\n");
+		
 		*array_length=*array_length+1;
 		if(*array_length==MAX_ARRAY_LENGTH)
 			status_work= FILE_IS_TOO_LARGE;
 	}
+
+
 	return status_work; 
 }
 
