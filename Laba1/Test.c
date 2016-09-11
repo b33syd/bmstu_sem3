@@ -232,18 +232,25 @@ int TestCreate2()
 
 }
 
-
+char* answer(int val)
+{
+	char *answer="FAILED";
+	if (val==OK)
+		answer="OK";
+	return answer;
+}
 
 int main()
 {
-	printf("TestRead1 %d\n",TestRead1() );
-	printf("TestRead2 %d\n",TestRead2() );
-	printf("TestRead3 %d\n",TestRead3() );
-	printf("TestRead4 %d\n",TestRead4() );
-	printf("TestAverage1 %d\n",TestAverage1() );
-	printf("TestAverage2 %d\n",TestAverage2() );
-	printf("TestAverage3 %d\n",TestAverage3() );
-	printf("TestCreate1 %d\n",TestCreate1() );
-	printf("TestCreate2 %d\n",TestCreate2() );
+	printf("TestRead1 %s\n",answer(TestRead1()) );
+	printf("TestRead2 %s\n",answer(TestRead2()) );
+	printf("TestRead3 %s\n",answer(TestRead3()) );
+	printf("TestRead4 %s\n",answer(TestRead4()) );
+	printf("TestAverage1 %s\n",answer(TestAverage1()) );
+	printf("TestAverage2 %s\n",answer(TestAverage2()) );
+	printf("TestAverage3 %s\n",answer(TestAverage3()) );
+	printf("TestCreate1 %s\n",answer(TestCreate1()) );
+	printf("TestCreate2 %s\n",answer(TestCreate2()) );
+	
 	return 0;
 }
