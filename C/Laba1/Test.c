@@ -2,18 +2,22 @@
 #include "functions.h"
 #include <math.h>
 
-#define MAX_ARRAY_LENGTH 10
-
-#define ERROR_ARG -1
-#define ERROR_OPEN_INPUT_FILE -2
-#define ERROR_OPEN_OUTPUT_FILE -4
-#define FILE_IS_NORMAL 0
-#define FILE_IS_TOO_LARGE 1
-
-#define OK 0
-#define DIVISION_BY_ZERO -3
-
+#define EPS 0.0001
 #define FAILED -10
+
+int ArrayCompare(const double array[], const double control_array[], int length){
+	
+
+	int status_test=OK;
+	for (int i = 0; i < length; ++i) {
+        if (array[i] != control_array[i]) {
+            status_test = FAILED;
+            break;
+        }
+    }
+
+    return status_test;
+}
 
 int TestRead1() {
     int status_test = OK;
@@ -31,6 +35,7 @@ int TestRead1() {
     return status_test;
 }
 
+
 int TestRead2() {
     int status_test = OK;
     int code = OK;
@@ -45,12 +50,7 @@ int TestRead2() {
     if ((code != FILE_IS_NORMAL) || (length_array_of_all_numbers != 7))
         status_test = FAILED;
 
-    for (int i = 0; i < length_array_of_all_numbers; ++i) {
-        if (array_of_all_numbers[i] != control_array[i]) {
-            status_test = FAILED;
-            break;
-        }
-    }
+    status_test=ArrayCompare(array_of_all_numbers,control_array,length_array_of_all_numbers);
 
     return status_test;
 }
@@ -70,12 +70,7 @@ int TestRead3() {
     if ((code != FILE_IS_NORMAL) || (length_array_of_all_numbers != MAX_ARRAY_LENGTH))
         status_test = FAILED;
 
-    for (int i = 0; i < length_array_of_all_numbers; ++i) {
-        if (array_of_all_numbers[i] != control_array[i]) {
-            status_test = FAILED;
-        }
-
-    }
+    status_test=ArrayCompare(array_of_all_numbers,control_array,length_array_of_all_numbers);
 
     return status_test;
 }
@@ -95,12 +90,7 @@ int TestRead4() {
     if ((code != FILE_IS_TOO_LARGE) || (length_array_of_all_numbers != MAX_ARRAY_LENGTH))
         status_test = FAILED;
 
-    for (int i = 0; i < length_array_of_all_numbers; ++i) {
-        if (array_of_all_numbers[i] != control_array[i]) {
-            status_test = FAILED;
-
-        }
-    }
+    status_test=ArrayCompare(array_of_all_numbers,control_array,length_array_of_all_numbers);
 
     return status_test;
 }
@@ -123,7 +113,7 @@ int TestAverage2() {
     double average = 0;
     int code = Average(array_of_all_numbers, length_array_of_all_numbers, &average);
 
-    if ((code != DIVISION_BY_ZERO) && (fabs(average - 2.824666) > 0.0001))
+    if ((code != DIVISION_BY_ZERO) && (fabs(average - 2.824666) > EPS))
         return FAILED;
 
     return OK;
@@ -136,7 +126,7 @@ int TestAverage3() {
     double average = 0;
     int code = Average(array_of_all_numbers, length_array_of_all_numbers, &average);
 
-    if ((code != DIVISION_BY_ZERO) && (fabs(average - 3.356666) > 0.0001))
+    if ((code != DIVISION_BY_ZERO) && (fabs(average - 3.356666) > EPS))
         return FAILED;
 
     return OK;
@@ -161,13 +151,9 @@ int TestCreate1() {
                              average, length_array_of_all_numbers, &length_array_of_numbers_bigger_average);
 
     if (length_array_of_numbers_bigger_average == control_length_array_of_numbers_bigger_average) {
-        for (int i = 0; i < control_length_array_of_numbers_bigger_average; ++i) {
-
-            if (array_of_numbers_bigger_average[i] != control_array_of_numbers_bigger_average[i]) {
-                status = FAILED;
-                break;
-            }
-        }
+        
+        status=ArrayCompare(array_of_numbers_bigger_average,control_array_of_numbers_bigger_average,length_array_of_numbers_bigger_average); 
+        
     }
     else {
         status = FAILED;
@@ -194,14 +180,10 @@ int TestCreate2() {
                              average, length_array_of_all_numbers, &length_array_of_numbers_bigger_average);
 
     if (length_array_of_numbers_bigger_average == control_length_array_of_numbers_bigger_average) {
-        for (int i = 0; i < control_length_array_of_numbers_bigger_average; ++i) {
+      
 
-            if (array_of_numbers_bigger_average[i] != control_array_of_numbers_bigger_average[i]) {
-                status = FAILED;
-                break;
-            }
-        }
-    }
+         status = ArrayCompare(array_of_numbers_bigger_average,control_array_of_numbers_bigger_average,length_array_of_numbers_bigger_average); 
+}
     else {
         status = FAILED;
     }
@@ -217,6 +199,7 @@ char *answer(int val) {
 }
 
 int main() {
+
     printf("TestRead1 %s\n", answer(TestRead1()));
     printf("TestRead2 %s\n", answer(TestRead2()));
     printf("TestRead3 %s\n", answer(TestRead3()));
