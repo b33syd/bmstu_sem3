@@ -1,6 +1,12 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+#define MAX_ARRAY_LENGTH 10
+#define FILE_IS_NORMAL 0
+#define FILE_IS_TOO_LARGE 1
+#define OK 0
+#define DIVISION_BY_ZERO -3
+
 //Read data from file to array
 int ReadDataFromFile(double array[], int *array_length, FILE *file);
 

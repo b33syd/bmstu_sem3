@@ -1,17 +1,11 @@
 #include <stdio.h>
 #include "functions.h"
 
-#define MAX_ARRAY_LENGTH 10
+
 
 #define ERROR_ARG -1
 #define ERROR_OPEN_INPUT_FILE -2
 #define ERROR_OPEN_OUTPUT_FILE -4
-#define FILE_IS_NORMAL 0
-#define FILE_IS_TOO_LARGE 1
-
-#define OK 0
-#define DIVISION_BY_ZERO -3
-
 
 int main(int argc, char **argv) {
     //File size label
@@ -45,7 +39,7 @@ int main(int argc, char **argv) {
             status_work = ERROR_OPEN_INPUT_FILE;
         }
         else {
-        	
+
             switch (ReadDataFromFile(array_of_all_numbers, &length_array_of_all_numbers, file1)) {
                 case FILE_IS_TOO_LARGE:
                     status_read_from_file = FILE_IS_TOO_LARGE;
@@ -80,6 +74,8 @@ int main(int argc, char **argv) {
                 if (file2 == 0) {
                     status_work = ERROR_OPEN_OUTPUT_FILE;
                 }
+                
+
 
                 PrintToFile(array_of_numbers_bigger_average, length_array_of_numbers_bigger_average, file2);
 
