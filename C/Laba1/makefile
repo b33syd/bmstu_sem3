@@ -23,15 +23,16 @@ test:
 	./main tests/limit tests/outfile3
 	./main tests/more_then_limit tests/outfile4
 	./main tests/testin tests/blockedfile
+
 moduletest: Test.o functions.o
 	gcc -o $@ $^
 	./Test
 
 gcov: 
 	rm *.gc*
-	c99 -Wall -Werror -pedantic -O0 -fprofile-arcs -ftest-coverage *.c -o main
+	c99 -Wall -Werror -pedantic -O0 -fprofile-arcs -ftest-coverage main.c functions.c -o main
 	make -i test
-	gcov *.c
+	gcov main.c functions.c
 clean:
 	rm *.o main
 	rm *.gc*
