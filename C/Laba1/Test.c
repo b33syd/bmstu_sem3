@@ -191,6 +191,38 @@ int TestCreate2() {
 
 }
 
+int TestCreate3() {
+    double array_of_all_numbers[MAX_ARRAY_LENGTH] ;
+    int length_array_of_all_numbers = 0;
+
+    double array_of_numbers_bigger_average[MAX_ARRAY_LENGTH];
+    int length_array_of_numbers_bigger_average = 0;
+
+    double average = 0;
+
+    int status = OK;
+    const double control_array_of_numbers_bigger_average[MAX_ARRAY_LENGTH];
+    const int control_length_array_of_numbers_bigger_average = 0;
+
+    CreateArrayBiggerAverage(array_of_all_numbers, array_of_numbers_bigger_average,
+                             average, length_array_of_all_numbers, &length_array_of_numbers_bigger_average);
+
+    if (length_array_of_numbers_bigger_average == control_length_array_of_numbers_bigger_average) {
+      
+
+         status = ArrayCompare(array_of_numbers_bigger_average,control_array_of_numbers_bigger_average,length_array_of_numbers_bigger_average); 
+}
+    else {
+        status = FAILED;
+    }
+    return status;
+
+}
+
+
+
+
+
 char *answer(int val) {
     char *answer = "FAILED";
     if (val == OK)
@@ -204,11 +236,14 @@ int main() {
     printf("TestRead2 %s\n", answer(TestRead2()));
     printf("TestRead3 %s\n", answer(TestRead3()));
     printf("TestRead4 %s\n", answer(TestRead4()));
+
     printf("TestAverage1 %s\n", answer(TestAverage1()));
     printf("TestAverage2 %s\n", answer(TestAverage2()));
     printf("TestAverage3 %s\n", answer(TestAverage3()));
+    
     printf("TestCreate1 %s\n", answer(TestCreate1()));
     printf("TestCreate2 %s\n", answer(TestCreate2()));
+    printf("TestCreate3 %s\n", answer(TestCreate3()));
 
     return 0;
 }
