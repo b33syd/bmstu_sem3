@@ -49,8 +49,7 @@ int main(int argc, char **argv) {
                     break;
             }
 
-            if (file1)
-                fclose(file1);
+            fclose(file1);
 
             if (status_work == OK) {
                 if (status_read_from_file == FILE_IS_TOO_LARGE)
@@ -74,13 +73,12 @@ int main(int argc, char **argv) {
                 if (file2 == 0) {
                     status_work = ERROR_OPEN_OUTPUT_FILE;
                 }
-                
+                else{
 
-
-                PrintToFile(array_of_numbers_bigger_average, length_array_of_numbers_bigger_average, file2);
-
-                if (file2)
+                	PrintToFile(array_of_numbers_bigger_average, length_array_of_numbers_bigger_average, file2);
                     fclose(file2);
+                }
+                
             }
         }
 
