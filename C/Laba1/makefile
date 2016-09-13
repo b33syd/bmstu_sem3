@@ -26,7 +26,7 @@ test:
 
 moduletest: Test.o functions.o
 	gcc -o $@ $^
-	./Test
+	./$@
 
 gcov: 
 	rm *.gc*
