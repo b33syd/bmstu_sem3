@@ -3,3 +3,7 @@ outfile[0-9]
 main
 moduletest
 Test
+*.gcno
+*.gcov
+*.gcda
+Laba1/tests/2016*
