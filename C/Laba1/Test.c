@@ -219,6 +219,34 @@ int TestCreate3() {
 
 }
 
+int TestCreate4() {
+    double array_of_all_numbers[MAX_ARRAY_LENGTH]={1,1,1,1,1,1,1,1,1,1} ;
+    int length_array_of_all_numbers = 10;
+
+    double array_of_numbers_bigger_average[MAX_ARRAY_LENGTH];
+    int length_array_of_numbers_bigger_average = 0;
+
+    double average = 1;
+
+    int status = OK;
+    const double control_array_of_numbers_bigger_average[MAX_ARRAY_LENGTH];
+    const int control_length_array_of_numbers_bigger_average = 0;
+
+    CreateArrayBiggerAverage(array_of_all_numbers, array_of_numbers_bigger_average,
+                             average, length_array_of_all_numbers, &length_array_of_numbers_bigger_average);
+
+    if (length_array_of_numbers_bigger_average == control_length_array_of_numbers_bigger_average) {
+      
+
+         status = ArrayCompare(array_of_numbers_bigger_average,control_array_of_numbers_bigger_average,length_array_of_numbers_bigger_average); 
+}
+    else {
+        status = FAILED;
+    }
+    return status;
+
+}
+
 
 
 
@@ -244,6 +272,7 @@ int main() {
     printf("TestCreate1 %s\n", answer(TestCreate1()));
     printf("TestCreate2 %s\n", answer(TestCreate2()));
     printf("TestCreate3 %s\n", answer(TestCreate3()));
+    printf("TestCreate4 %s\n", answer(TestCreate4()));
 
     return 0;
 }
