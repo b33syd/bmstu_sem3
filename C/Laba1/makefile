@@ -5,7 +5,7 @@ FLAGS += -g3 -gdwarf-2
 endif
 
 ifeq ($(mode), release)
-FLASg += -DNDEBUG -g0
+FLAGS += -DNDEBUG -g0
 endif
 
 main: main.o  functions.o
