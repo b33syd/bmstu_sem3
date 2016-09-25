@@ -1,0 +1,37 @@
+gcc  -std=c99  -ggdb -Wall -Werror -pedantic -c main.c
+gcc  -std=c99  -ggdb -Wall -Werror -pedantic -c functions.c
+gcc -o main main.o functions.o
+gcc  -std=c99  -ggdb -Wall -Werror -pedantic -c moduletest.c
+gcc -o moduletest moduletest.o functions.o
+./moduletest
+Test count_file_length 1 OK
+Test count_file_length 2 OK
+Test readfromfile 1 OK
+Test seach_max_pair 1 OK
+Test seach_max_pair 2 OK
+Test seach_max_pair 3 OK
+Test seach_max_pair 4 OK
+Test seach_max_pair 5 OK
+	[33m Start functional testing (B[m
+make: 'main' is up to date.
+Test with file out1 [31m FAILED(B[m
+diff tests/2016-09-25-17-13-48/out1 tests/answers/out1
+Test with file out2 [31m FAILED(B[m
+diff tests/2016-09-25-17-13-48/out2 tests/answers/out2
+Test with file out3 [31m FAILED(B[m
+diff tests/2016-09-25-17-13-48/out3 tests/answers/out3
+Test with file out4 [31m FAILED(B[m
+diff tests/2016-09-25-17-13-48/out4 tests/answers/out4
+Test with file out5 [31m FAILED(B[m
+diff tests/2016-09-25-17-13-48/out5 tests/answers/out5
+Test with file out6 [31m FAILED(B[m
+diff tests/2016-09-25-17-13-48/out6 tests/answers/out6
+Test with file out7 [31m FAILED(B[m
+diff tests/2016-09-25-17-13-48/out7 tests/answers/out7
+Test with file out8 [31m FAILED(B[m
+diff tests/2016-09-25-17-13-48/out8 tests/answers/out8
+  [33m End functional testing (B[m
+  [33m Start valgrind testing (B[m
+  [33m End valgrind testing (B[m
+  [33m Start code review (B[m
+  [33m Start code review (B[m

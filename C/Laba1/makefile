@@ -28,3 +28,6 @@ gcov:
 clean:
 	rm *.o main moduletest
 	rm *.gc*
+
+valgrind: main
+	valgrind --tool=memcheck ./main tests/normal
