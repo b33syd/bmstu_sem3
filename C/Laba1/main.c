@@ -8,6 +8,30 @@
 #define ERROR_ARG -4
 #define OK 0
 
+int worker(int **array, const int array_length, FILE *file)
+{
+    int status_work = OK;
+    if (*array != NULL) 
+    {
+        int *p_end;
+        //count end poiner
+        p_end = *array + array_length;
+
+        status_work = readfromfile(*array, p_end, file);
+
+        if (status_work == OK)
+        {       
+            int max = seach_max_pair(*array, p_end);
+            printf("max %d\n", max);
+        }
+    }
+    else 
+    {
+        status_work = ERROR_MALLOC;
+    }
+    return status_work;
+}
+
 
 int main(int argc, char **argv)
 {
@@ -15,6 +39,7 @@ int main(int argc, char **argv)
     int *array;
 
     int status_work = OK;
+    
     FILE * file;
 
     //try to open file
@@ -48,23 +73,8 @@ int main(int argc, char **argv)
         {
             //create array
             array = malloc(array_length * sizeof(int));
-
-            if (array != NULL) 
-            {
-                int *p_end;
-                //count end poiner
-                p_end = array + array_length;
-
-                readfromfile(array, p_end, file);
-
-                int max = seach_max_pair(array, p_end);
-
-                printf("max %d\n", max);
-            }
-            else 
-            {
-                status_work = ERROR_MALLOC;
-            }
+            
+            status_work = worker(&array, array_length, file);          
 
             fclose(file);
             free(array);

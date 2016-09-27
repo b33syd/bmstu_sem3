@@ -4,6 +4,7 @@
 
 
 #define FAILED -1;
+
 #define OK 0
 
 
@@ -36,7 +37,8 @@ int test_readfromfile(const char *patch, const int array_length, int *control_ar
         int *p_end;
         //count end poiner
         p_end = array + array_length;
-        readfromfile(array, p_end, file);
+        status = readfromfile(array, p_end, file);
+
         for (int i = 0; i < array_length; i++)
         {
             if (array[i] != control_array[i])

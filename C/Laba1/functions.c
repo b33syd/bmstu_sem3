@@ -1,19 +1,26 @@
 #include <stdio.h>
 #include "functions.h"
 
+#define BAD_READ -10
+#define OK 0
+
 void count_file_length(int *array_length, FILE *file)
 {
     int temp;
-    while ((fscanf(file, "%d", &temp) != eof))
+    while ((fscanf(file, "%d", &temp) != EOF))
         *array_length = *array_length + 1;
 }
 
-void readfromfile(int *array_st, int *array_end, FILE *file)
+int readfromfile(int *array_st, int *array_end, FILE *file)
 {
     for (; array_st < array_end; array_st++)
     {
-        fscanf(file, "%d", array_st);
+        if (fscanf(file, "%d", array_st) != 1)
+        {
+            return BAD_READ;
+        }
     }
+    return OK;
 }
 
 int seach_max_pair(int *p_start, int *p_end)
