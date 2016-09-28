@@ -20,6 +20,10 @@ void print(struct list *head);
 
 struct list *insert(struct list *head, unsigned n, struct list *node);
 
+struct list *insert_by_node(struct list *head, struct list *node_after, struct list *node_to_insert);
+
+struct list *search_position_by_node(struct list *head, int value);
+
 struct list *add_end(struct list *head, struct list *node);
 
 int search_position(struct list *head, int value);

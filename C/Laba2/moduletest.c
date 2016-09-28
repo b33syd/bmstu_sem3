@@ -86,15 +86,15 @@ int test_search_position()
     node = create_node(3);
     head = add_end(head, node);
 
-    if (search_position(head, 1) != 0)
+    if (search_position_by_node(head, 1) != NULL)
     {
         status = FAILED
     };
-    if (search_position(head, 2) != 1)
+    if (search_position_by_node(head, 2) != head)
     {
         status = FAILED
     };
-    if (search_position(head, 3) != 2)
+    if (search_position_by_node(head, 3) != head->next)
     {
         status = FAILED
     };
@@ -117,19 +117,17 @@ int test_insert()
 
     //вставка вперд
     node = create_node(0);
-    head = insert(head, 0, node);
+    head = insert_by_node(head, NULL, node);
 
     //вставка в серидину
     node = create_node(2);
-    head = insert(head, 2, node);
+    head = insert_by_node(head, head->next, node);
 
     //вставка в конец
     node = create_node(4);
-    head = insert(head, 4, node);
-
-    //вставка за конец списка
-    node = create_node(5);
-    head = insert(head, 6, node);
+    head = insert_by_node(head, head->next->next->next, node);
+    
+    //print(head );
 
     int i = 0;
     for (; head; head = head->next, i++)
@@ -139,6 +137,8 @@ int test_insert()
             status = FAILED
         };
     }
+    if (i != 5)
+        status = FAILED;
 
     free_all(head);
     head = NULL;
@@ -146,17 +146,27 @@ int test_insert()
     return status;
 }
 
-int compare(struct list *head, int *array)
+int compare(struct list *head, int *array, int length)
 {
     int status = OK;
     int i = 0;
+
 
     for (; head; head = head->next, i++)
     {
         if (head->value != array[i])
         {
             status = FAILED
+            break;
         };
+        //printf("            %d\n",head->value );
+    }
+    //printf("%d\n %d\n",i,length );    
+
+    if (length != i)
+    {
+        status = FAILED;
+        //printf("inwork\n");
     }
 
     return status;
@@ -175,7 +185,7 @@ int test_read_list_from_file()
     int control_array1[] = { 2, 8, 18, 27, 30, 34, 34, 34, 34, 36, 41, 44, 44, 46, 49, 50, 52, 65, 68, 68, 72, 72, 73,
         75, 80, 90, 92, 93, 99, 99, 99, 100 };
    
-    status = compare(head, control_array1);
+    status = compare(head, control_array1, 32);
 
     free_all(head);
     head = NULL;
@@ -193,14 +203,16 @@ int test_distributor()
     {
         status = read_list_from_file(&head, file);
     }
-
-    int control_array_even[] = { 2, 8, 18, 30, 34, 34, 34, 34, 36, 44, 44, 46, 50, 52, 68, 68, 72, 72, 80, 90, 100 };
-    status = compare(even, control_array_even);
+    distributor(head, &even, &odd);
+    
+    int control_array_even[] = { 2, 8, 18, 30, 34, 34, 34, 34, 36, 44, 44, 46, 50, 52, 68, 68, 72, 72, 80, 90, 92,100 };
+    
+    status = compare(even, control_array_even, 22);
 
     if (status == OK)
     {
         int control_array_odd[] = { 27, 41, 49, 65, 73, 75, 93, 99, 99, 99 };
-        status = compare(odd, control_array_odd);
+        status = compare(odd, control_array_odd, 10);
     }
     free_all(head);
     free_all(even);

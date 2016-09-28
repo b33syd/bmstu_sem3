@@ -2,7 +2,7 @@ FLAGS := -std=c99  -ggdb -Wall -Werror -pedantic
 
 main: main.o  list.o
 	gcc -o $@ $^
-	./main tests/normal tests/temp/file_normal_2 tests/temp/file_normal_3
+#	./main tests/normal tests/temp/file_normal_2 tests/temp/file_normal_3
 
 %.o: %.c 
 	gcc  $(FLAGS) -c $<

@@ -46,6 +46,33 @@ int search_position(struct list *head, int value)
     return i;
 }
 
+struct list *search_position_by_node(struct list *head, int value)
+{
+    struct list *current = head;
+    struct list *prew = NULL;
+    while (current != 0)
+    {
+        if (current->value >= value)
+            return prew;
+        prew = current;
+        current = current->next;
+    }    
+    return prew;
+}
+
+struct list *insert_by_node(struct list *head, struct list *node_after, struct list *node_to_insert)
+{
+    struct list *pointer_start = head;
+    if (node_after != NULL)
+    {
+        node_to_insert->next = node_after->next;
+        node_after->next = node_to_insert;        
+    }
+    else
+        pointer_start = add_front(head, node_to_insert);
+   
+    return pointer_start;
+}
 
 struct list *insert(struct list *head, unsigned n, struct list *node)
 {
@@ -65,6 +92,7 @@ struct list *insert(struct list *head, unsigned n, struct list *node)
             head = head->next;
             i++;
         }
+
         //Если это не последний, то next на следующий узел
         if (head->next)
         {
@@ -98,6 +126,7 @@ void print_to_file(struct list *head, FILE *file)
     {
         fprintf(file, "%d ", head->value);
     }
+    printf("\n");
 }
 
 void free_all(struct list *head)
@@ -154,8 +183,8 @@ int read_list_from_file(struct list **head, FILE *file)
         node = create_node(temp);
         if (node == NULL)
             status_work = ERROR_MALLOC;
-
-        *head = insert(*head, search_position(*head, node->value), node);
+        *head = insert_by_node(*head, search_position_by_node(*head, node->value), node);
+        //*head = insert(*head, search_position(*head, node->value), node);
     }
     if (*head == NULL)
         status_work = ERROR_LENGTH;

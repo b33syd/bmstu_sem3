@@ -31,7 +31,7 @@ int main(int argc, char **argv)
         else
         {
             status_work = read_list_from_file(&head, file1);
-
+            //printf("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\n");
             fclose(file1);
 
             if (status_work == OK)
