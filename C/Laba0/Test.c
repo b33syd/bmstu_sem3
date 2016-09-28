@@ -220,17 +220,17 @@ int TestCreate3() {
 }
 
 int TestCreate4() {
-    double array_of_all_numbers[MAX_ARRAY_LENGTH]={1,1,1,1,1,1,1,1,1,1} ;
+    double array_of_all_numbers[MAX_ARRAY_LENGTH]={1,2,3,4,5,6,7,8,9,10} ;
     int length_array_of_all_numbers = 10;
 
     double array_of_numbers_bigger_average[MAX_ARRAY_LENGTH];
     int length_array_of_numbers_bigger_average = 0;
 
-    double average = 1;
+    double average = 0;
 
     int status = OK;
-    const double control_array_of_numbers_bigger_average[MAX_ARRAY_LENGTH];
-    const int control_length_array_of_numbers_bigger_average = 0;
+    const double control_array_of_numbers_bigger_average[MAX_ARRAY_LENGTH]={1,2,3,4,5,6,7,8,9,10} ;
+    const int control_length_array_of_numbers_bigger_average = 10 ;
 
     CreateArrayBiggerAverage(array_of_all_numbers, array_of_numbers_bigger_average,
                              average, length_array_of_all_numbers, &length_array_of_numbers_bigger_average);

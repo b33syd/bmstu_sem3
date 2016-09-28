@@ -37,32 +37,29 @@ int main(int argc, char **argv)
             if (status_work == OK)
                 status_work = distributor(head, &even, &odd);
 
-            if (status_work == OK)
+            
+            FILE * file2 = fopen(argv[2], "w");
+            if ((file2 == 0) && (status_work == OK))
             {
-                FILE * file2 = fopen(argv[2], "w");
-                if (file2 == 0)
-                {
-                    status_work = ERROR_OPEN_OUTPUT_FILE;
-                }
-                else
-                {
-                    print_to_file(even, file2);
-                    fclose(file2);
-                }
-
-                FILE * file3 = fopen(argv[3], "w");
-                if (file3 == 0)
-                {
-                    status_work = ERROR_OPEN_OUTPUT_FILE;
-                }
-                else
-                {
-                    print_to_file(odd, file3);
-                    fclose(file3);
-                }
+                status_work = ERROR_OPEN_OUTPUT_FILE;
             }
-        }
+            else
+            {
+                print_to_file(even, file2);
+                fclose(file2);
+            }
 
+            FILE * file3 = fopen(argv[3], "w");
+            if ((file3 == 0) && (status_work == OK))
+            {
+                status_work = ERROR_OPEN_OUTPUT_FILE;
+            }
+            else
+            {
+                print_to_file(odd, file3);
+                fclose(file3);
+            }            
+        }
 
         free_all(head);
         free_all(even);

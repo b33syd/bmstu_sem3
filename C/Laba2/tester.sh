@@ -54,10 +54,8 @@ echo "  ${YELLOW} Start code review ${NC}"                      |tee -a  $REPORT
 cd tests/Utils/
 wine CodeChecker.exe ../../main.c				|tee -a  ../../$REPORT
 wine CodeChecker.exe ../../list.c				|tee -a  ../../$REPORT
-#wine CodeChecker.exe ../../moduletest.c				|tee -a  ../../$REPORT
+wine CodeChecker.exe ../../moduletest.c				|tee -a  ../../$REPORT
 wine CodeChecker.exe ../../list.h				|tee -a  ../../$REPORT
-#wine CodeChecker.exe ../../list.h                               |tee -a  ../../$REPORT
-
 cd ../../
 echo "  ${YELLOW} End code review ${NC}"                      |tee -a  $REPORT
 
