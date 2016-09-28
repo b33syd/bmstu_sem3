@@ -7,7 +7,6 @@
 
 #define OK 0
 
-
 int test_count_file_length(const char *patch, const int answer)
 {
     int array_length = 0;
@@ -63,13 +62,24 @@ int test_seach_max_pair(int *array, const int array_length, const int answer)
 {
     int *p_end;
     p_end = array + array_length;
+    int max;
+    int code = seach_max_pair(array, p_end, &max);
 
-    int max = seach_max_pair(array, p_end);
 
-    if (max == answer)
-        return OK;
+    if (code == OK)
+    {
+        if (max == answer)
+            return OK;
+        else
+            return FAILED;
+    }
     else
-        return FAILED;
+    {
+        if ((p_end == NULL) || (array == NULL) || (code = ERROR_LENGTH))
+            return OK;
+        else
+            return FAILED;
+    }
 }
 
 char *answer(int val)
@@ -102,6 +112,8 @@ int main()
 
     int array5[15] = { 1, 2, 3, 4, 5, 6, 7, 4, 4, 4, 4, 4, 3, 2, 1 };
     printf("test seach_max_pair 5 %s\n", answer(test_seach_max_pair(array5, 15, 11)));
+
+    printf("test seach_max_pair 51 %s\n", answer(test_seach_max_pair(NULL, 0, 0)));
 
     return 0;
 }

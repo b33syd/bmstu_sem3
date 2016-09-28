@@ -8,26 +8,34 @@
 #define ERROR_ARG -4
 #define OK 0
 
-int worker(int **array, const int array_length, FILE *file)
+int read_file(int **array, int *array_length, FILE *file)
 {
+    *array_length = 0;
     int status_work = OK;
-    if (*array != NULL) 
+
+    count_file_length(array_length, file);
+
+    rewind(file);
+
+    if (*array_length == 0) 
     {
-        int *p_end;
-        //count end poiner
-        p_end = *array + array_length;
-
-        status_work = readfromfile(*array, p_end, file);
-
-        if (status_work == OK)
-        {       
-            int max = seach_max_pair(*array, p_end);
-            printf("max %d\n", max);
-        }
+        status_work = ERROR_LENGTH;
     }
-    else 
+    else
     {
-        status_work = ERROR_MALLOC;
+        //create array
+        *array = malloc(*array_length * sizeof(int));
+        if (*array != NULL) 
+        {            
+            int *p_end;
+            //count end poiner
+            p_end = *array + *array_length;
+            status_work = readfromfile(*array, p_end, file);
+        }
+        else 
+        {
+            status_work = ERROR_MALLOC;
+        }
     }
     return status_work;
 }
@@ -37,14 +45,13 @@ int main(int argc, char **argv)
 {
     int array_length = 0;
     int *array;
+    int max = 0;
 
     int status_work = OK;
     
     FILE * file;
-
     //try to open file
-
-
+    //
     if (argc < 2) 
     {
         status_work = ERROR_ARG;
@@ -60,25 +67,20 @@ int main(int argc, char **argv)
     }
 
     if (status_work == OK) 
-    {
-        count_file_length(&array_length, file);
-
-        rewind(file);
-
-        if (array_length == 0) 
-        {
-            status_work = ERROR_LENGTH;
+    {            
+        status_work = read_file(&array, &array_length, file);          
+        
+        if (status_work == OK)
+        {       
+            int *p_end;
+            //count end poiner
+            p_end = array + array_length;
+            status_work = seach_max_pair(array, p_end, &max);
         }
-        else
-        {
-            //create array
-            array = malloc(array_length * sizeof(int));
-            
-            status_work = worker(&array, array_length, file);          
 
-            fclose(file);
-            free(array);
-        }
+        fclose(file);
+        if (status_work != ERROR_LENGTH)
+            free(array);    
     }
 
     switch (status_work) 
@@ -95,6 +97,8 @@ int main(int argc, char **argv)
         case (ERROR_OPEN_INPUT_FILE):
             printf("Unable to open input file.\n");
             break;
+        case (OK):
+            printf("max %d\n", max);
     }
 
     return status_work;
