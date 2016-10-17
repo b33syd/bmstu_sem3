@@ -1,0 +1,42 @@
+	[33m Start functional testing (B[m
+Test with file outtest1.1 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest1.1 tests/answers/outtest1.1
+Test with file outtest1.2 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest1.2 tests/answers/outtest1.2
+Test with file outtest1.3 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest1.3 tests/answers/outtest1.3
+Test with file outtest2.1 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest2.1 tests/answers/outtest2.1
+Test with file outtest2.2 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest2.2 tests/answers/outtest2.2
+Test with file outtest2.3 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest2.3 tests/answers/outtest2.3
+Test with file outtest3.1 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest3.1 tests/answers/outtest3.1
+Test with file outtest3.2 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest3.2 tests/answers/outtest3.2
+Test with file outtest3.3 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest3.3 tests/answers/outtest3.3
+Test with file outtest4.1 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest4.1 tests/answers/outtest4.1
+Test with file outtest4.2 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest4.2 tests/answers/outtest4.2
+Test with file outtest5.1 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest5.1 tests/answers/outtest5.1
+Test with file outtest5.2 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest5.2 tests/answers/outtest5.2
+Test with file outtest5.3 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest5.3 tests/answers/outtest5.3
+Test with file outtest5.4 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest5.4 tests/answers/outtest5.4
+Test with file outtest5.5 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest5.5 tests/answers/outtest5.5
+Test with file outtest5.6 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest5.6 tests/answers/outtest5.6
+Test with file outtest6.1 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest6.1 tests/answers/outtest6.1
+Test with file outtest6.2 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest6.2 tests/answers/outtest6.2
+Test with file outtest6.3 [31m FAILED (B[m
+diff tests/2016-10-18-00-42-23/outtest6.3 tests/answers/outtest6.3
+  [33m End functional testing (B[m
