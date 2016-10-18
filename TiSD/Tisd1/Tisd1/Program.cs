@@ -62,12 +62,13 @@ namespace Tisd1
 			catch {
 				num.eps = 0-eps_pos;
 			}
-
+			/*
 			if (Math.Abs(num.eps) > 99999)
 			{
-				Console.WriteLine ("Ошибка показателя E");
-				System.Environment.Exit(0);
+				Console.WriteLine ("Ошибка показателя E1");
+				//System.Environment.Exit(0);
 			}
+			*/
 		}
 
 		//Проверка ввода
@@ -176,7 +177,7 @@ namespace Tisd1
 					break;
 				}
 			}
-			if (k <= 30) 
+			if (k < 30) 
 			{
 				if (rez.mantissa [30 + k] > 5) 
 				{   
@@ -243,7 +244,7 @@ namespace Tisd1
 			line = Console.ReadLine ();
 			while (CheckInput (line, regarray) != 0) {
 				Console.WriteLine ("Ошибка в формате ввода.");
-				System.Environment.Exit(0);
+				//System.Environment.Exit(0);
 				line = Console.ReadLine ();
 			}
 

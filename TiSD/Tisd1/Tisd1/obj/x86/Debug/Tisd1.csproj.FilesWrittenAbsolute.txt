@@ -3,3 +3,8 @@
 /home/alexey/Music/Tisd1/Tisd1/bin/Debug/Tisd1.exe
 /home/alexey/Music/Tisd1/Tisd1/obj/x86/Debug/Tisd1.exe
 /home/alexey/Music/Tisd1/Tisd1/obj/x86/Debug/Tisd1.exe.mdb
+/home/alexey/repos/bmstu_sem3/TiSD/Tisd1/Tisd1/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/alexey/repos/bmstu_sem3/TiSD/Tisd1/Tisd1/bin/Debug/Tisd1.exe.mdb
+/home/alexey/repos/bmstu_sem3/TiSD/Tisd1/Tisd1/bin/Debug/Tisd1.exe
+/home/alexey/repos/bmstu_sem3/TiSD/Tisd1/Tisd1/obj/x86/Debug/Tisd1.exe
+/home/alexey/repos/bmstu_sem3/TiSD/Tisd1/Tisd1/obj/x86/Debug/Tisd1.exe.mdb
