@@ -18,6 +18,11 @@ test:
 	./main tests/only_even tests/temp/file_even_2 tests/temp/file_even_3
 	./main tests/only_odd tests/temp/file_odd_2 tests/temp/file_odd_3
 	./main tests/normal tests/temp/file_normal_2 tests/temp/file_normal_3
+val:
+	valgrind ./main tests/empty_file tests/temp/file_null_2 tests/temp/file_null_3
+	valgrind ./main tests/only_even tests/temp/file_even_2 tests/temp/file_even_3
+	valgrind ./main tests/only_odd tests/temp/file_odd_2 tests/temp/file_odd_3
+	valgrind ./main tests/normal tests/temp/file_normal_2 tests/temp/file_normal_3
 
 
 moduletest: moduletest.o list.o

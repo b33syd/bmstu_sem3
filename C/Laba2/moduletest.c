@@ -157,39 +157,103 @@ int compare(struct list *head, int *array, int length)
         if (head->value != array[i])
         {
             status = FAILED
+            printf("            %d    %d\n",head->value,array[i] );
             break;
         };
-        //printf("            %d\n",head->value );
     }
     //printf("%d\n %d\n",i,length );    
 
     if (length != i)
     {
         status = FAILED;
-        //printf("inwork\n");
+        printf("inwork\n");
     }
 
+    return status;
+}
+
+int test_read(char* filename, int *control_array, int len)
+{
+    struct list *head = NULL;
+    int status = OK;
+
+    FILE * file = fopen(filename, "r");
+    if (file)
+    {
+        status = read_list_from_file(&head, file);
+    }
+   
+    status = compare(head, control_array, len);
+    
+    free_all(head);
+    head = NULL;
+    //printf("%s\n", filename );
     return status;
 }
 
 int test_read_list_from_file()
 {
     int status = OK;
-    struct list *head = NULL;
-    FILE * file = fopen("tests/normal", "r");
-    if (file)
-    {
-        status = read_list_from_file(&head, file);
-    }
+    
 
+    {
+    // Разнобой и с повтором      
     int control_array1[] = { 2, 8, 18, 27, 30, 34, 34, 34, 34, 36, 41, 44, 44, 46, 49, 50, 52, 65, 68, 68, 72, 72, 73,
         75, 80, 90, 92, 93, 99, 99, 99, 100 };
-   
-    status = compare(head, control_array1, 32);
-
-    free_all(head);
-    head = NULL;
-
+    if(test_read("tests/normal",control_array1,32)!=OK)
+        return FAILED;
+    }
+        
+    
+    {
+        // Разнобой без  повторов 
+        // 92 27 72 75 68 90
+        int control_array1[]= { 27, 68, 72, 75, 90, 92};   
+        if(test_read("tests/random",control_array1,6)!=OK)
+            return FAILED;
+    }
+    
+    
+    {
+        // Упорядоченные на возрастанию c повтором   
+        int control_array1[]= { 2, 3, 3, 4, 5};   
+        if(test_read("tests/up",control_array1,5)!=OK)
+            return FAILED;
+    }
+    {
+        //Упорядоченные по возрастанию без повторов
+        int control_array1[]= { 1, 3, 6, 7, 8};
+        if(test_read("tests/up1",control_array1,5)!=OK)
+            return FAILED;
+    }
+    {
+        //Упорябоченные по убыванию без повторов
+        int control_array1[]= { 1, 3, 6, 7, 8};
+        if(test_read("tests/down_with_out",control_array1,5)!=OK)
+            return FAILED;
+    }
+    
+    {
+    //Из двух по возрастанию
+    int control_array1[]= { 1, 2};
+    if(test_read("tests/two_up",control_array1,2)!=OK)
+        return FAILED;
+    }
+    
+    {
+    //Из двух по убыванию
+    int control_array1[]= { 1 , 2};
+    if(test_read("tests/two_down",control_array1,2)!=OK)
+        return FAILED;
+    }
+    
+    {
+    //Из одного
+    int control_array1[]= { 1};
+    if(test_read("tests/only_one",control_array1,1)!=OK)
+        return FAILED;
+    }
+    
     return status;
 }
 

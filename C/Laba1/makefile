@@ -6,7 +6,7 @@ main: main.o  functions.o
 %.o: %.c 
 	gcc  $(FLAGS) -c $<
 
-test:
+test: 
 	./main 
 	./main tests/does_not_exist
 	./main tests/empty_file
