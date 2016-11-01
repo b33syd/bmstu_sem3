@@ -11,22 +11,29 @@ using namespace std;
 #define MAX_RECORD 200
 
 
-void read_dB(Book *arr,int *n)
+void read_dB(Book *arr,int *n,istream& fin)
 {
-    ifstream fin("/home/alexey/ClionProjects/Tisd3/database");
+    for(int i=0; i<MAX_RECORD; i++) {
+        arr[i].~Book();
+        arr[i] = Book();
+    }
 
-    if (!fin.is_open()) // если файл не открыт
-        cout << "Файл не может быть открыт!\n"; // сообщить об этом
-    else
-    {
+    *n=0;
+
+    fin.clear();
+    fin.seekg(0);
+
+
+
+
         int m;
         fin>>m;
         for (int i = 0; i < m; ++i) {
             arr[i].read_from_file(fin);
         }
         *n=m;
-    }
-    fin.close();
+
+
 }
 //+
 bool isLess(Book book1, Book book2 )
@@ -80,9 +87,7 @@ void quick_sort(T *begin, T* end) {
 
         if(i <= j) {
             if (isLess(*i,*j)) {
-                T tmp = *j;
-                *j = *i;
-                *i = tmp;
+                swap(*i,*j);
             }
             i++;
             j--;
@@ -140,29 +145,33 @@ int Remove(Book *arr, int *k)
     int z;
     cout << "Введите индекс удаляемой записи от 0 до " << n - 1;
     cin >> z;
-    if(z < 0 && z >= n) {
-        cout << "выход из дапазона" << endl;
-        return 0;
+    if(z < 0 || z >= n) {
+        cout << "Выход из дапазона" << endl;
+        return 1;
     }
 
     for(int i = z; i < n; i++) {
-        arr[i] = arr[i + 1];
+         memcpy(&arr[i],&arr[i + 1], sizeof(Book));
     }
 
-    arr[n].~Book();
-    arr[n] = Book();
+   // arr[n].~Book();
+    //arr[n] = Book();
 
     cout << "Элемент  был удален удален" << endl;
     n--;
     *k=n;
+    return 0;
 }
 
 
 void Sort_to_time(Book *arr, int n,Table_key *keys) {
     time_t t1, t2, t3, t4;
+    Book arr3[MAX_RECORD];
     for(int i = 0; i < n; i++) {
         keys[i] = Table_key(i, arr[i]);
+        arr3[i]=arr[i];
     }
+
     //Сортировка по ключам
     t1 = clock();
     //mySort(keys,0,n,isLess);
@@ -175,9 +184,29 @@ void Sort_to_time(Book *arr, int n,Table_key *keys) {
     quick_sort(arr,arr+n-1);
     t4 = clock();
 
-    cout << "Время работы сортировки по ключам: " << t2 - t1 << " мс" << endl;
-    cout << "Время работы сортировки таблицы: " << t4 - t3  << " мс" << endl;
+    cout << "Время работы сортировки по ключам (быстрой сортировкой): " << t2 - t1 << " мс" << endl;
+    cout << "Время работы сортировки таблицы: (быстрой сортировкой): " << t4 - t3  << " мс" << endl;
+
+    for(int i = 0; i < n; i++) {
+        //keys[i] = Table_key(i, arr[i]);
+        arr3[i]=arr[i];
+    }
+    //Сортировка по ключам
+    t1 = clock();
+    mySort(keys,0,n,isLess);
+    //quick_sort(keys,keys+n-1);
+    t2 = clock();
+
+    //Сортировка таблицы
+    t3 = clock();
+    mySort(arr3,0,n,isLess);
+    //quick_sort(arr,arr+n-1);
+    t4 = clock();
+
+    cout << "Время работы сортировки по ключам (Пузырек): " << t2 - t1 << " мс" << endl;
+    cout << "Время работы сортировки таблицы: (Пузырек): " << t4 - t3  << " мс" << endl;
 }
+
 
 
 void DifSort(Book *arr, int n,Table_key *keys) {
@@ -205,7 +234,9 @@ void DifSort(Book *arr, int n,Table_key *keys) {
     t4 = clock();
 
     for(int i = 0; i < n; i++) {
-        cout << keys[i].id << " ";
+        cout<<endl;
+        arr[keys[i].id].show();
+        cout<<endl;
     }
     cout <<endl;
 
@@ -228,22 +259,46 @@ void Key_sort(Book *arr, int n,Table_key *keys) {
     }
     cout << endl;
     for(int i = 0; i < n; i++) {
-        //arr[keys[i].id].show();
+        arr[keys[i].id].show();
+        cout << endl;
     }
     cout << endl;
 }
+
 
 int main() {
 
 
     int a;
-    Book arr[MAX_RECORD];
+    //Book arr2[MAX_RECORD];
+    Book *arr2=(Book*)malloc (sizeof(Book)*MAX_RECORD);
+    //Book *arr=arr=(Book*)malloc (sizeof(arr2[0])*MAX_RECORD);
     int n=0;
+    int n2=0;
 
     time_t t1, t2, t3, t4;
 
     int z;
-    read_dB(arr,&n);
+    ifstream    fin;
+    fin.open("/home/alexey/ClionProjects/Tisd3/database");
+
+    if (!fin.is_open()) // если файл не открыт
+        cout << "Файл не может быть открыт!\n"; // сообщить об этом
+    else
+        read_dB(arr2,&n2,fin);
+
+    Book *arr=(Book*)malloc (sizeof(Book)*MAX_RECORD);
+    for (int i = 0; i < n2; i++) {
+        memcpy(&arr[i],&arr2[i], sizeof(Book));
+    }
+
+    for (int i = n2; i < MAX_RECORD; i++) {
+        arr[i]=Book();
+    }
+
+
+
+    n=n2;
     Table_key keys[MAX_RECORD];
     while(true) {
         cout << "**************************************************************" << endl;
@@ -257,9 +312,9 @@ int main() {
         cout << "5: Сравние времени сортировки таблицы и ключей" << endl;
         cout << "6: Сравнить эффективность сортировок (по ключам)" << endl;
         cout << "7: Поиск по году и отрасли" << endl;
-        cout << "8: Выход" << endl;
-        cout << sizeof(arr[10]) << endl;
-        cout << sizeof(keys[1])<< endl;
+        cout << "8: Перемешать таблицу" << endl;
+        cout << "9: Выход" << endl;
+
 
 
 
@@ -272,6 +327,8 @@ int main() {
             do {
                 flag = 0;
                 //cin >> str;
+
+
                 cin.getline(str,LEN_STRING,'\n');
                 char **end = NULL;
                 x = strtol(str, end, 10);
@@ -293,6 +350,8 @@ int main() {
                     arr[i].show();
                     cout << endl;
                 }
+
+
                 break;
 ///////////////////////////////////////////////////////////////////////////
             case 1:
@@ -318,7 +377,18 @@ int main() {
                 n++;
                 break;
             case 4:
-                Remove(arr, &n);
+                if(Remove(arr, &n)==0)
+                {
+                    for (int i = 0; i < n; i++) {
+                        cout << i << endl;
+                        arr[i].show();
+                        cout << endl;
+                    }
+                }
+                cin.clear();
+                //cin.sync();
+                cin.ignore(INT8_MAX,'\n');
+
                 break;
 ///////////////////////////////////////////////////////////////////////////
             case 5:
@@ -330,8 +400,29 @@ int main() {
             case 7:
                 Search(arr,n);
                 break;
-
             case 8:
+
+                arr=(Book*)malloc (sizeof(Book)*MAX_RECORD);
+
+                for (int i = 0; i < n2; i++) {
+
+                    memcpy(&arr[i],&arr2[i], sizeof(Book));
+                    //arr[i]=arr2[i];
+                }
+
+
+                arr[n2-1]=arr2[n2-1];
+
+                for (int i = n2; i < MAX_RECORD; i++) {
+                    arr[i]=Book();
+                }
+
+                n=n2;
+
+                break;
+
+
+            case 9:
                 cout << "Выход" << endl;
                 return 0;
             default:
@@ -340,6 +431,7 @@ int main() {
 
         }
     }
+
 }
 
 

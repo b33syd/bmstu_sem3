@@ -64,6 +64,7 @@ public:
     void create_record();
     void show();
     int GetPages();
+
 };
 
 

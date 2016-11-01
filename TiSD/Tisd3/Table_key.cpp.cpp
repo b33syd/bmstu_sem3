@@ -7,6 +7,7 @@
 class Table_key {
 public:
     int id;
+
     int pages;
 
     Table_key() {
