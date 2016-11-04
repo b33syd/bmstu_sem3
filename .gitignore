@@ -7,3 +7,8 @@ Test
 *.gcov
 *.gcda
 Laba1/tests/2016*
+DESKTOP_SESSION=ubuntu
+PAPERSIZE=a4
+LC_PAPER=ru_RU.UTF-8
+*log.txt
+Utils/log.txt

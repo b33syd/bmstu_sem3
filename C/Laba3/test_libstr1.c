@@ -79,7 +79,7 @@ int main()
 
     printf("test strndup 1 %s\n", answer(test_strndup("",0)));
     //printf("test strndup 2 %s\n", answer(test_strndup(NULL,10)));
-    //printf("test strndup 3 %s\n", answer(test_strndup(NULL,NULL)));
+    printf("test strndup 3 %s\n", answer(test_strndup(NULL,NULL)));
     printf("test strndup 4 %s\n", answer(test_strndup("",1)));
     printf("test strndup 5 %s\n", answer(test_strndup("",10)));
 
