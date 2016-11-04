@@ -38,8 +38,11 @@ size_t mystrnlen(const char *s, size_t maxlen)
 //Задание 1. Создание дубликата строки strndup
 char * mystrndup(const char *str, size_t maxlen)
 {
+	if(str==NULL)
+		return NULL;
+
 	char *copy=NULL;
-	size_t len=0;
+	size_t len=0; 
 
 	len = mystrnlen(str, maxlen);
 	copy = (char *) malloc(len+1);
@@ -56,4 +59,6 @@ char * mystrndup(const char *str, size_t maxlen)
 	    
 	}
 	return copy;
+	
+	//return NULL;
 }
