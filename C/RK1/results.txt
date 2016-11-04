@@ -1,0 +1,29 @@
+Dr. Memory version 1.9.0 build 4 built on Oct  2 2015 13:13:14
+Dr. Memory results for pid 3772: "main.exe"
+Application cmdline: "main.exe file1.txt file2.txt"
+Recorded 116 suppression(s) from default C:\Program Files (x86)\Dr. Memory\bin\suppress-default.txt
+
+===========================================================================
+FINAL SUMMARY:
+
+DUPLICATE ERROR COUNTS:
+
+SUPPRESSIONS USED:
+
+NO ERRORS FOUND:
+      0 unique,     0 total unaddressable access(es)
+      0 unique,     0 total uninitialized access(es)
+      0 unique,     0 total invalid heap argument(s)
+      0 unique,     0 total GDI usage error(s)
+      0 unique,     0 total handle leak(s)
+      0 unique,     0 total warning(s)
+      0 unique,     0 total,      0 byte(s) of leak(s)
+      0 unique,     0 total,      0 byte(s) of possible leak(s)
+ERRORS IGNORED:
+      3 potential error(s) (suspected false positives)
+         (details: C:\Users\Student\AppData\Roaming\Dr. Memory\DrMemory-main.exe.3772.000\potential_errors.txt)
+      2 potential leak(s) (suspected false positives)
+         (details: C:\Users\Student\AppData\Roaming\Dr. Memory\DrMemory-main.exe.3772.000\potential_errors.txt)
+      0 unique,     0 total,      0 byte(s) of still-reachable allocation(s)
+         (re-run with "-show_reachable" for details)
+Details: C:\Users\Student\AppData\Roaming\Dr. Memory\DrMemory-main.exe.3772.000\results.txt
