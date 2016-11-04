@@ -31,9 +31,11 @@ int test_strndup(const char *str, const int maxlen)
         result = OK;
     else
         result = FAIL;
-   
-    free(mydup);
-    free(standartdup);
+
+    if(standartdup!=NULL)
+        free(standartdup);
+    if(mydup!=NULL)
+        free(mydup);
 
     return result;
 }
@@ -76,18 +78,20 @@ int main()
     
 
     printf("test strndup 1 %s\n", answer(test_strndup("",0)));
-    printf("test strndup 2 %s\n", answer(test_strndup("",1)));
-    printf("test strndup 3 %s\n", answer(test_strndup("",10)));
+    //printf("test strndup 2 %s\n", answer(test_strndup(NULL,10)));
+    //printf("test strndup 3 %s\n", answer(test_strndup(NULL,NULL)));
+    printf("test strndup 4 %s\n", answer(test_strndup("",1)));
+    printf("test strndup 5 %s\n", answer(test_strndup("",10)));
 
-    printf("test strndup 4 %s\n", answer(test_strndup("1",0)));
-    printf("test strndup 5 %s\n", answer(test_strndup("1",1)));
-    printf("test strndup 6 %s\n", answer(test_strndup("1",10)));
+    printf("test strndup 6 %s\n", answer(test_strndup("1",0)));
+    printf("test strndup 7 %s\n", answer(test_strndup("1",1)));
+    printf("test strndup 8 %s\n", answer(test_strndup("1",10)));
 
-    printf("test strndup 7 %s\n", answer(test_strndup("No targets specified",19)));
-    printf("test strndup 8 %s\n", answer(test_strndup("No targets specified",20)));
-    printf("test strndup 9 %s\n", answer(test_strndup("No targets specified",21)));
+    printf("test strndup 9 %s\n", answer(test_strndup("No targets specified",19)));
+    printf("test strndup 10 %s\n", answer(test_strndup("No targets specified",20)));
+    printf("test strndup 11 %s\n", answer(test_strndup("No targets specified",21)));
 
-    printf("test strndup 10 %s\n", answer(test_strndup("No targets specified",-1)));
+    printf("test strndup 12 %s\n", answer(test_strndup("No targets specified",-1)));
 
 
     return 0;
