@@ -11,15 +11,23 @@ int reloc_str(char** string,int cur_len, int new_len)
 
 	temp_string=(char*)malloc(new_len*sizeof(char));
 
+
 	if (temp_string==NULL)
 	{			
 		code_error=ERROR_MALLOC;
 		
 	}
+	else
+	{
+		for (int i = 0; i < cur_len; ++i)
+		{
+			temp_string[i]='\0';
+		}
 
-	memcpy(temp_string, *string, cur_len);
-	free(*string);
-	*string=temp_string;
+		memcpy(temp_string, *string, cur_len);
+		free(*string);
+		*string=temp_string;
+	}
 
 	return code_error;
 }
@@ -28,59 +36,6 @@ int reloc_str(char** string,int cur_len, int new_len)
 
 //Задание 2 динамическое чтение строки из файла
 //Аналогично стандарту ssize_t getline(char **lineptr, size_t *n, FILE *stream);
-//
-//fgets и читать буферами
-int readfromfile(char **line,size_t *n, FILE *file)
-{
-
-	int code_error=OK;
-	int current_length=0;
-	int array_max_length=0;
-
-	char *string=NULL;
-	//char *temp_string;
-
-	char temp;	
-
-
-		
-	while(fscanf(file, "%c", &temp) != EOF)
-	{
-		//довыделяем пямять при необходимости
-		if(current_length==array_max_length)
-		{
-			array_max_length+=LENGTH_DELTA;				
-
-			code_error= reloc_str(&string,current_length , array_max_length);
-
-			if (code_error!=OK)
-				break;
-		}
-
-		string[current_length]=temp;
-		if(string[current_length] == '\n')
-        	break;
-    
-    	//Двигаем позицию
-		current_length++;
-	}
-	
-	//printf("%s\n",string );
-	
-	//Обрезаем лишенее
-
-	code_error= reloc_str(&string,current_length , current_length);
-	if (code_error)	
-		string[current_length]='\0';
-	
-
-	*line=string;
-	*n=current_length;
-	
-	
-	return code_error;
-}
-
 
 int readfromfile2(char **line,size_t *n, FILE *file)
 {
@@ -99,7 +54,7 @@ int readfromfile2(char **line,size_t *n, FILE *file)
 		//printf("%s\n",buf );
 		int readed=strlen(buf);
 		//довыделяем пямять при необходимости
-		if(current_length+readed>=array_max_length)
+		if(current_length+BUF_SIZE>=array_max_length)
 		{
 			array_max_length+=LENGTH_DELTA;				
 
@@ -109,18 +64,28 @@ int readfromfile2(char **line,size_t *n, FILE *file)
 			if (code_error!=OK)
 				break;
 		}
-		memcpy(string+current_length,buf,readed);
 		
+
+		memcpy(string+current_length,buf,BUF_SIZE);
+
+		
+
+		
+
+
 		
     	//Двигаем позицию
 		current_length+=readed;
     	
 		if(string[current_length-1] == '\n')
 		{
-			string[current_length-1]='\0';
+			//string[current_length-1]='\0';
+			//string[current_length]='\0';
         	break;
   		}
 	}
+
+
 	
 	//printf("%s\n",string );
 	
@@ -132,12 +97,17 @@ int readfromfile2(char **line,size_t *n, FILE *file)
 
 		return -1;
 	}
+
+
 	
-	code_error= reloc_str(&string,current_length , current_length+1);
+	code_error= reloc_str(&string,current_length , current_length);
+	
 	
 
-	if (code_error)	
+	if (!code_error)	
 		string[current_length]='\0';
+
+	string[current_length]='\0';
 	
 
 	*line=string;

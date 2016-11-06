@@ -26,6 +26,9 @@ test_libstr1: test_libstr1.o libstr1.o
 	gcc -o $@ $^
 	./$@
 
+test_libstr2: test_libstr2.o libstr2.o
+	gcc -o $@ $^
+	./$@
 
 gcov: main.c list.c
 	rm *.gc*

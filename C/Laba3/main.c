@@ -25,13 +25,13 @@ int work(FILE * file_in,FILE * file_out,const char * replace_what, const char * 
 
 	while((code_error=readfromfile2(&string,&length,file_in)!=-1))
 	{
-		//printf("smile   %s\n",string);
 		string1=replace(string, replace_what,replace_to);
-		//printf("smile2   %s\n",string1);
-		fprintf(file_out,"%s\n",string1);
 		
-		free(string1);
-		free(string);
+		fprintf(file_out,"%s",string1);
+		if(string1!=NULL)
+			free(string1);
+		if(string!=NULL)
+			free(string);
 
 		length=0;
 	}
