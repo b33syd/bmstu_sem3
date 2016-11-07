@@ -14,11 +14,11 @@
 class SparseMatrix {
 
 private:
-    std::vector<int> A;  //не нулевые элементы
+    std::vector<int> A;  //ненулевые элементы
     std::vector<int> IA; // номера строк  для элементов вектора A
     std::list<int> JA; //
-    int n;// количесво строк
-    int m;// количестро столбцов
+    int n;// количество строк
+    int m;// количество столбцов
 
 public:
     SparseMatrix();
@@ -65,7 +65,6 @@ public:
         //res+=16;
         return res;
     }
-
 
 
 };

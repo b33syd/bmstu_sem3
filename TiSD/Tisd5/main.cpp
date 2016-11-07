@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){
     while(true) {
-        cout << "Умножение матрицы на вектор-столбец" << endl;
+        cout <<endl<< "Умножение матрицы на вектор-столбец" << endl;
         cout << "Выберите одно из следующих действий:" << endl;
         cout << "0: Работа с матрицей и вектором" << endl;
         cout << "1: Сравнение скорости работы алгоритмов работы с матрицами" << endl;
@@ -20,7 +20,8 @@ int main(){
                 compare();
                 break;
             default:
-                cout << "Error code" << endl;
+                cout<<"Exit";
+                return 0;
                 break;
         }
     }
