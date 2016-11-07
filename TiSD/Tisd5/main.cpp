@@ -1,10 +1,35 @@
 #include <iostream>
-#include "NormalMatrix.h"
-#include "SparseMatrix.h"
+#include "func.h"
 
 using namespace std;
 
-int main() {
+int main(){
+    while(true) {
+        cout << "Умножение матрицы на вектор-столбец:" << endl;
+        cout << "Выберите одно из следующих действий:" << endl;
+        cout << "0: Работа с матрицей и вектором" << endl;
+        cout << "1: Сравнение скорости работы стандартного алгоритма и работы с разряженными матрицами" << endl;
+        cout << "2: Exit" << endl;
+        int ch;
+        cin >> ch;
+        switch(ch) {
+            case 0:
+                work_hand();
+                break;
+            case 1:
+                compare();
+                break;
+            case 2:
+                return 0;
+            default:
+                cout << "Error code" << endl;
+                break;
+        }
+    }
+}
+
+/*
+int oldmain() {
 
     int m = 0;
     int n = 0;
@@ -107,7 +132,7 @@ int main() {
     cout << "Время транспонирования: "  << t4 - t3 << endl;
 
 
-    /*
+
 
     cout<<"=============NORMAL from NOT NORMAl============="<<endl;
     //NormalMatrix m3;
@@ -118,10 +143,11 @@ int main() {
     SparseMatrix m4;
     m4.transposition(m1);
     //m4.show();
-    */
+
 
 
 
     std::cout << "Hello, World!" << std::endl;
     return 0;
 }
+*/
