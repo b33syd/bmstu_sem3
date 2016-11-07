@@ -24,10 +24,6 @@ public:
 
     NormalMatrix(int n, int m, int **matr);
 
-    ~NormalMatrix();
-
-
-
     //свойства get
     int getN() const;
 

@@ -42,14 +42,14 @@ public:
     void convert(NormalMatrix &matrA);
 
 
-    void transposition(const NormalMatrix &matrA);
+//    void transposition(const NormalMatrix &matrA);
 
     void mult(SparseMatrix &obj1, SparseMatrix &obj2);
 
 
     int **to_standart();
 
-    void transposition(const SparseMatrix &obj);
+    void transposition();
 
     int smallmult(std::vector<int> &A1, std::vector<int> &IA1, int st1, int end1,
                   std::vector<int> &A2, std::vector<int> &IA2, int st2, int end2);

@@ -12,22 +12,7 @@ NormalMatrix::NormalMatrix(int n, int m, int **matr) {
     create(n, m, matr);
 }
 
-NormalMatrix::~NormalMatrix() {
 
-    /*
-    if(matrix!=NULL)
-    {
-        for (int i = 0; i < n; i++) {
-            delete[] matrix[i];
-        }
-        delete[] matrix;
-        n = 0;
-        m = 0;
-        matrix = NULL;
-    }
-     */
-
-}
 
 int NormalMatrix::getN() const {
     return n;

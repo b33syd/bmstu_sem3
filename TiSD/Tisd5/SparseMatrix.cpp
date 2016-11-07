@@ -44,6 +44,9 @@ SparseMatrix::SparseMatrix(const SparseMatrix &obj) {
 }
 
 SparseMatrix::~SparseMatrix() {
+    A.erase(A.begin(),A.end());
+    IA.erase(IA.begin(),IA.end());
+    JA.erase(JA.begin(),JA.end());
     A.clear();
     IA.clear();
     JA.clear();
@@ -93,75 +96,26 @@ SparseMatrix &SparseMatrix::operator=(const SparseMatrix &obj) {
     return *this;
 }
 
+// не верно работает при ширине 1
 int **SparseMatrix::to_standart() {
-    int **res = new int *[n];
+    int **res = new int* [n];
 
-    for (int i = 0; i < n; i++) {
-        res[i] = new int[m];
-        for (int j = 0; j < m; j++) {
+    for(int i = 0; i < n; i++)
+    {
+        res[i] = new int [m];
+        for (int j = 0; j < m; j++)
+        {
             res[i][j] = 0;
         }
     }
 
-    int i = 0, mem = 0;
+    int i=0,mem=0;
 
     std::list<int>::iterator k = JA.begin();
     std::list<int>::iterator next;
-    for (; k != JA.end(); ++k) {
-        next = std::next(k, 1);
-        if (*k == -1) {
-            i++;
-            continue;
-        }
-
-        while (-1 == *next) {
-            next = std::next(next, 1);
-        }
-
-        if(IA.size()==0)
-            break;
-        if (*next < *k) {
-            mem = IA.size();
-        }else
-            mem = *next;
-
-        for (int j = *k; j < mem; ++j) {
-            res[IA[j]][i] = A[j];
-        }
-        ++i;
-
-    }
-
-    return res;
-
-}
-
-int SparseMatrix::getN() const {
-    return n;
-}
-
-int SparseMatrix::getM() const {
-    return m;
-}
-
-void SparseMatrix::transposition(const SparseMatrix &obj) {
-    /*
-    std::vector <int> A;  //не нулевые элементы
-    std::vector <int> IA; // номера строк  для элементов вектора A
-    std::list <int> JA; //
-    int n;// количесво строк
-    int m;// количестро столбцов
-
-
-    int i=0,mem=0;
-    std::list<int>::iterator k = obj.JA.begin();
-    std::list<int>::iterator next;
-
-    int lineid=0;
-
-
-    for (int p=0; k!=obj.JA.end(); ++k,p++) {
-
+    if (IA.size()==0)
+        return res;
+    for (; k!=JA.end(); ++k) {
         next=std::next(k,1);
         if(*k==-1)
         {    i++;
@@ -174,30 +128,107 @@ void SparseMatrix::transposition(const SparseMatrix &obj) {
         }
 
         if (*next<*k)
-            mem=obj.IA.size();
+            mem=IA.size();
         else
             mem = *next;
 
         for (int j = *k; j <mem ; ++j)
         {
-            if(j==lineid)
-            {
-                A.push_back(obj.A[j]);
-                IA.push_back(p);
-                break;
-            }p;
-            if(j>lineid) break;
+            res[IA[j]][i] = A[j];
         }
         ++i;
 
-
     }
+    return res;
 
-*/
 
 }
 
+int SparseMatrix::getN() const {
+    return n;
+}
 
+int SparseMatrix::getM() const {
+    return m;
+}
+
+void SparseMatrix::transposition() {
+    std::vector <std::vector<int>> A_new (n);  //не нулевые элементы
+    std::vector <std::vector<int>> IA_new(n); // номера строк  для элементов вектора A
+
+    int i=0,mem=0;
+    std::list<int>::iterator k = JA.begin();
+    std::list<int>::iterator next;
+
+
+    for (int p=0; k != JA.end(); ++k,p++) {
+
+        next=std::next(k,1);
+        if(*k==-1)
+        {    //p++;
+            //k++
+            continue;
+        }
+
+        while(-1==*next)
+        {
+            next=std::next(next,1);
+        }
+
+        if (*next<*k)
+            mem=IA.size();
+        else
+            mem = *next;
+
+        for (int j = *k; j <mem ; ++j)
+        {
+            A_new[IA[j]].push_back(A[j]);
+            IA_new[IA[j]].push_back(p);
+        }
+        //++i;
+    }
+    /*for(int i = 0; i < n; i++) {
+        for(int j = 0; j < A_new[i].size(); j++) {
+            std::cout << A_new[i][j] << " ";
+        }
+        std::cout << std::endl;
+        for(int j = 0; j < A_new[i].size(); j++) {
+            std::cout << IA_new[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "-----------------------\n\n\n";*/
+    //A.erase(A.begin(), A.end());
+    //IA.erase(IA.begin(), IA.end());
+    //JA.erase(JA.begin(), JA.end());
+    A.clear();
+    IA.clear();
+    JA.clear();
+    //std::cout <<"qqqqqqqqqqqqqqqqqqqqqqqqq "<<A.size()<< "  "<<JA.size()<<std::endl;
+    int flag = 0;
+
+    int AAAA=0;
+    for(int i = 0; i < n; i++) {
+        flag = 0;
+        JA.push_back(AAAA);
+        //std::cout << "n: " << n << "  ";
+        int e=A_new[i].size();
+        for(int j = 0; j < e; j++) {
+            A.push_back(A_new[i][j]);
+            IA.push_back(IA_new[i][j]);
+            //std::cout << IA_new[i][j] << " ";
+            AAAA++;
+            flag = 1;
+        }
+        //std::cout << "\n";
+        if(flag == 0) {
+             *JA.end()=-1;
+        }
+    }
+    std::swap(n, m);
+}
+
+/*
 void SparseMatrix::transposition(const NormalMatrix &matrA) {
     NormalMatrix transNormal;
     transNormal.transposition(matrA);
@@ -205,6 +236,8 @@ void SparseMatrix::transposition(const NormalMatrix &matrA) {
     convert(transNormal);
     //delete (transNormal);
 }
+
+*/
 
 SparseMatrix::SparseMatrix(NormalMatrix matrA) {
     convert(matrA);
@@ -265,6 +298,7 @@ void SparseMatrix::mult(SparseMatrix &obj1, SparseMatrix &obj2) {
 
 
     }
+    //JA.push_back(n);
 }
 
 

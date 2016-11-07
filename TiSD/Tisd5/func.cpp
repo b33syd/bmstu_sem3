@@ -11,6 +11,11 @@ int rand_int(int n) {
     return (int) ((rand() / (double) RAND_MAX) * (double) n);
 }
 
+int badmessage()
+{
+    cout << "error, попытайтесь еще раз:  ";
+}
+
 int **generate(int n, int m, double percent, int l, int r) {
     srand(time(0));
     int colv = n * m * percent / 100;
@@ -50,7 +55,7 @@ int ** hand_input(int n, int m) {
         }
     }
 
-    cout << "Введите по 3 числа для каждого ненулевого эл-та (номер строки, столбца начиная с нуля, значение) ";
+    cout << "Введите по 3 числа для каждого ненулевого эл-та (индексация с нуля)\n (строка  столбц  значение)\n";
     while(1) {
         while (1) {
             int i = n + 1, j = m + 1, k = 0;
@@ -60,7 +65,7 @@ int ** hand_input(int n, int m) {
                     break;
                 }
             }
-            cout << "error, попробуйте еще раз:  ";
+            badmessage();
         }
         cout << "Продолжить (1-нет)? ";
         char ch;
@@ -72,30 +77,37 @@ int ** hand_input(int n, int m) {
     return a;
 }
 
+void input_range(int *n){
+    while(!(scanf("%d", n) && (*n >= -R_MAX) && (*n <= R_MAX))) {
+        badmessage();
+        *n = R_MAX + 1;
+    }
+
+}
+
+void input_percent(double *p){
+    double percent = -1;
+    cout << "Введите процент заполнения [0, 100]: ";
+    while(!(scanf("%lf", &percent) && (percent >= 0) && (percent <= 100))) {
+        badmessage();
+        percent = -1;
+    }
+    *p=percent;
+}
 
 int ** auto_input(int n, int m) {
     double percent = -1;
-    cout << "Процент заполнения [0, 100]: ";
-
-    while(!(scanf("%lf", &percent) && (percent >= 0) && (percent <= 100))) {
-        cout << "error, попробуйте еще раз:  ";
-        percent = -1;
-    }
+    input_percent(&percent);
 
     cout << "Диапазон значений [" << -R_MAX << ", " << R_MAX << "]: " << endl;
     int l, r;
     l = r = R_MAX + 1;
     cout << "Начало диапазона: " << endl;
-    while(!(scanf("%d", &l) && (l >= -R_MAX) && (l <= R_MAX))) {
-        cout << "error, попробуйте еще раз:  ";
-        l = R_MAX + 1;
-    }
+    input_range(&l);
 
     cout << "Конец диапазона: " << endl;
-    while(!(scanf("%d", &r) && (r >= -R_MAX) && (r <= R_MAX) && (l <= r))) {
-        cout << "error, попробуйте еще раз:  ";
-        r = R_MAX + 1;
-    }
+    input_range(&r);
+
     return generate(n, m, percent, l, r);
 }
 
@@ -105,19 +117,19 @@ int ** input_matr(int *n, int *m) {
     cout << "Ввод матрицы\n";
     cout << "Введите кол-во строк [1, " << MAX_SIZE << "]: ";
     while(!(scanf("%d", n) && (*n >= 1) && (*n <= MAX_SIZE))) {
-        cout << "error, попробуйте еще раз:  ";
+        badmessage();
         *n = 0;
     }
     cout << "Введите кол-во столбцов [1, " << MAX_SIZE << "]: ";
     *m = 0;
     while(!(scanf("%d", m) && (*m >= 1) && (*m <= MAX_SIZE))) {
-        cout << "error, попробуйте еще раз:  ";
+        badmessage();
         *m = 0;
     }
 
     cout << "Выберите ввод: \n\t 1- ручной \n\t 2- автоматический" << endl;
     cin >> tmp;
-    while(tmp != 1 && tmp != 2) { cout << "error, попробуйте еще раз: "; cin >> tmp; }
+    while(tmp != 1 && tmp != 2) { cout << "error, попытайтесь еще раз: "; cin >> tmp; }
     if(tmp == 1) {
         return hand_input(*n, *m);
     }
@@ -133,7 +145,7 @@ int ** input_string(int n, int m) {
 
     cout << "Выберите ввод: \n\t 1- ручной \n\t 2- автоматический" << endl;
     cin >> tmp;
-    while(tmp != 1 && tmp != 2) { cout << "error, попробуйте еще раз:  "; cin >> tmp; }
+    while(tmp != 1 && tmp != 2) { badmessage(); cin >> tmp; }
     if(tmp == 1) {
         return hand_input(n, m);
     }
@@ -157,6 +169,8 @@ void work_hand() {
 
     SparseMatrix sm1 = SparseMatrix(normal1);
     SparseMatrix sm2 = SparseMatrix(normal2);
+    SparseMatrix sm3 = SparseMatrix(normal1);
+
     //cout <<" MATRIX1"<<endl;
     //normal1.show();
     //sm1.show();
@@ -164,42 +178,62 @@ void work_hand() {
     //normal2.show();
     //sm2.show();
 
-    NormalMatrix normalres_from_spres;
+    //NormalMatrix normalres_from_spres,test1,test2,test3;
     NormalMatrix normalres;
     SparseMatrix spres;
     SparseMatrix sm1_tran;
+    /*
+    cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ before trans"<<endl;
+    test1.create(sm1.getN(),sm1.getM(),sm1.to_standart());
+    test1.show();
+     */
+    sm1.transposition();
+    /*
+    cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++after trans"<<endl;
+    test2.create(sm1.getN(),sm1.getM(),sm1.to_standart());
+    test2.show();
+    cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++not normal ans"<<endl;
+     */
+    spres.mult(sm1,sm2);
 
-    sm1_tran.transposition(normal1);
-    spres.mult(sm1_tran,sm2);
-    normalres_from_spres.create(spres.getN(),spres.getM(),spres.to_standart());
+    //normalres_from_spres.create(spres.getN(),spres.getM(),spres.to_standart());
+    //spres.mult(sm1,sm2);
+
+    //cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ normal ans"<<endl;
     normalres.multiplication(normal1,normal2);
+    //normalres.show();
+    //cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ end"<<endl;
+
 
     //cout <<" MATRIX3"<<endl;
     //normalres_from_spres.show();
     //spres.show();
     //normalres.show();
+
+
+    //normalres_from_spres.show();
+    //cout<<"55555555555555555555555555555555555555555555555555555555555555"<<endl;
+    //normalres.show();
     char ch;
     int flag = 1;
     while(flag) {
-        cout << "0: Показать первую матрицу в разреженном формате" << endl;
-        cout << "1: Показать вектор столбец в разреженном формате" << endl;
-        cout << "2: Показать результат умножения в разреженном формате" << endl;
-        cout << "3: Показать первую матрицу в стандартном формате" << endl;
-        cout << "4: Показать вектор столбец в стандартном формате" << endl;
-        cout << "5: Показать результат в стандартном формате" << endl;
-        cout << "6: Показать результат работы стандартного алгоритма" << endl;
-        cout << "7: Закончить работу с введенной парой матриц" << endl;
+        cout << "0: Вывести первую матрицу в разреженном формате" << endl;
+        cout << "1: Вывести вектор-столбец в разреженном формате" << endl;
+        cout << "2: Вывести результат умножения в разреженном формате" << endl;
+        cout << "3: Вывести первую матрицу в стандартном формате" << endl;
+        cout << "4: Вывести вектор-столбец в стандартном формате" << endl;
+        cout << "5: Вывести результат работы стандартного алгоритма" << endl;
+        cout << "6: Закончить работу" << endl;
         cin >> ch;
-        cout << ch << endl;
+        //cout << ch << endl;
         switch(ch) {
             case '0':   sm1.show(); break;
             case '1':   sm2.show(); break;
             case '2':   spres.show(); break;
             case '3':   normal1.show(); break;
             case '4':   normal2.show(); break;
-            case '5':   normalres_from_spres.show(); break;
-            case '6':   normalres.show(); break;
-            case '7':
+            case '5':   normalres.show(); break;
+            case '6':
                 flag = 0;
                 break;
             default: cout << "Error"; break;
@@ -208,6 +242,7 @@ void work_hand() {
     free_matr(a, na);
     free_matr(b, nb);
 }
+
 void compare() {
 
     int n, m, k;
@@ -215,24 +250,21 @@ void compare() {
 
     cout << "Введите кол-во строк [1, " << MAX_SIZE << "]: ";
     while(!(scanf("%d", &n) && (n >= 1) && (n <= MAX_SIZE))) {
-        cout << "error, попробуйте еще раз:  ";
+        badmessage();
         n = 0;
     }
 
     cout << "Введите кол-во столбцов [1, " << MAX_SIZE << "]: ";
     m = 0;
     while(!(scanf("%d", &m) && (m >= 1) && (m <= MAX_SIZE))) {
-        cout << "error, попробуйте еще раз:  ";
+        badmessage();
         m = 0;
     }
 
 
     double percent = -1;
-    cout << "Введите процент заполнения(вещественное число) [0, 100]: ";
-    while(!(scanf("%lf", &percent) && (percent >= 0) && (percent <= 100))) {
-        cout << "error, попробуйте еще раз:  ";
-        percent = -1;
-    }
+    input_percent(&percent);
+
     int **a = generate(n, m, percent, -R_MAX, R_MAX);
     int **b = generate(m, 1, percent, -R_MAX, R_MAX);
 
@@ -248,26 +280,26 @@ void compare() {
     //res1.show();
 
     SparseMatrix res2;
-    SparseMatrix m5;
+    /*SparseMatrix m5;
     time_t t3 = clock();
     m5.transposition(m1);
     time_t t4 = clock();
     res2.mult(m5, m4);
     time_t t5 = clock();
     //res2.show();
+    */
+
+    time_t t3 = clock();
+    m2.transposition();
+    res2.mult(m2, m4);
+    time_t t5 = clock();
 
     cout << "Время умножения в стандартном виде: "  << t2 - t1 << endl;
-    cout << "Время умножения в разреженном виде: "  << t5 - t4 << endl;
-    cout << "Время транспонирования: "  << t4 - t3 << endl;
+    cout << "Время умножения в разреженном виде: "  << (t5 - t3) << endl;
 
     cout << "Память, для  стандартной матрицы " << m1.memory() << endl;
     cout << "Память, для  разряженной матрицы " << m2.memory()<< endl;
 
     free_matr(a, n);
     free_matr(b, m);
-
-
-
-
-
 }

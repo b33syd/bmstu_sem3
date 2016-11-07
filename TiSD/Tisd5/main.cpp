@@ -5,10 +5,10 @@ using namespace std;
 
 int main(){
     while(true) {
-        cout << "Умножение матрицы на вектор-столбец:" << endl;
+        cout << "Умножение матрицы на вектор-столбец" << endl;
         cout << "Выберите одно из следующих действий:" << endl;
         cout << "0: Работа с матрицей и вектором" << endl;
-        cout << "1: Сравнение скорости работы стандартного алгоритма и работы с разряженными матрицами" << endl;
+        cout << "1: Сравнение скорости работы алгоритмов работы с матрицами" << endl;
         cout << "2: Exit" << endl;
         int ch;
         cin >> ch;
@@ -19,8 +19,6 @@ int main(){
             case 1:
                 compare();
                 break;
-            case 2:
-                return 0;
             default:
                 cout << "Error code" << endl;
                 break;
