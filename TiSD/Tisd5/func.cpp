@@ -67,7 +67,7 @@ int ** hand_input(int n, int m) {
             }
             badmessage();
         }
-        cout << "Продолжить (1-нет)? ";
+        cout << "Продолжить (0-да 1-нет)? ";
         char ch;
         cin >> ch;
         if (ch == '1') {
@@ -187,6 +187,8 @@ void work_hand() {
     test1.create(sm1.getN(),sm1.getM(),sm1.to_standart());
     test1.show();
      */
+    sm1.show();
+    sm2.show();
     sm1.transposition();
     /*
     cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++after trans"<<endl;
@@ -227,7 +229,7 @@ void work_hand() {
         cin >> ch;
         //cout << ch << endl;
         switch(ch) {
-            case '0':   sm1.show(); break;
+            case '0':   sm3.show(); break;
             case '1':   sm2.show(); break;
             case '2':   spres.show(); break;
             case '3':   normal1.show(); break;

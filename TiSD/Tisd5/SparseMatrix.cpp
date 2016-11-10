@@ -12,6 +12,9 @@ SparseMatrix::SparseMatrix() {
 void SparseMatrix::convert(NormalMatrix &matr) {
     n = matr.getN();
     m = matr.getM();
+    IA.clear();
+    A.clear();
+    JA.clear();
     bool first = false;
     int id = 0;
     //по столбцам
@@ -22,6 +25,7 @@ void SparseMatrix::convert(NormalMatrix &matr) {
 
 
             if (matr.getMatr(j, i) != 0) {
+
                 if (first == false) {
                     first = true;
                     id = IA.size();
@@ -214,16 +218,18 @@ void SparseMatrix::transposition() {
         //std::cout << "n: " << n << "  ";
         int e=A_new[i].size();
         for(int j = 0; j < e; j++) {
-            A.push_back(A_new[i][j]);
-            IA.push_back(IA_new[i][j]);
-            //std::cout << IA_new[i][j] << " ";
-            AAAA++;
-            flag = 1;
+            if(A_new[i][j]!=0) {
+                A.push_back(A_new[i][j]);
+                IA.push_back(IA_new[i][j]);
+                //std::cout << IA_new[i][j] << " ";
+                AAAA++;
+                flag = 1;
+            }
+        }
+        if(flag == 0) {
+            *JA.end()=-1;
         }
         //std::cout << "\n";
-        if(flag == 0) {
-             *JA.end()=-1;
-        }
     }
     std::swap(n, m);
 }
