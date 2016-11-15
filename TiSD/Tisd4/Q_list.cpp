@@ -60,7 +60,7 @@ Q_list::Q_list()
 Q_list::~Q_list()
 {
     free_all(head, memory, &m);
-    //cout << "~ " << endl;
+
 }
 
 void Q_list::PushBack(int x)

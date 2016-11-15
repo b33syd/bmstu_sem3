@@ -17,9 +17,6 @@ list *add_to_list(list *tmp, list *head);
 void free_all(list *head, list* memory, int m);
 void print_adr(list *head);
 
-
-
-
 class Q_list {
 private:
     list *memory[MAX_MEMORY];

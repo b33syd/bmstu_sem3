@@ -70,6 +70,8 @@ void work(int n, int interval, interval_time t1, interval_time t2, interval_time
         if((!que1.Empty_Q())&&(type==2))
         {
             que2.PushBack(int());
+            req_in2++;
+
         }
 
 
@@ -158,7 +160,7 @@ int main() {
     int n = 1000;
     int interval = 100;
     interval_time t1(1, 5);
-    interval_time t2(0, 3);
+    interval_time t2(0, 1);
     interval_time t3(0, 4);
     interval_time t4(0, 1);
 
@@ -185,6 +187,7 @@ int main() {
                 if(flag != 1)
                     flag = 0;
                 work<Q_list>(n, interval, t1, t2, t3, t4, flag);
+
                 break;
             case 3:
                 cout << "Выход" << endl;
