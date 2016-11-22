@@ -19,7 +19,11 @@ int main(int argc, char const *argv[])
 	    {
 	    	A=read_matrix(file_inA);
 	    	fclose(file_inA);
-	    	print(A);
+
+	    	if(!A)
+		    	code_error=ERROR_NULL;
+		    else
+		    	print(A);
 	    }
 
 
@@ -34,7 +38,11 @@ int main(int argc, char const *argv[])
 		    }
 		    fclose(file_inB);
 		    printf("\n");
-		    print(B);
+
+		    if(!B)
+		    	code_error=ERROR_NULL;
+		    else
+		    	print(B);
 		}
 		
 		if(code_error==OK)
@@ -46,16 +54,20 @@ int main(int argc, char const *argv[])
 
 		    switch(k)
 		    {
-		    	case (1): printf("SUMM\n"); C=summ(A,B); break;
-		    	case (2): printf("MULT\n"); C=multiplication(A,B); break;
-				case (3): printf("INV\n");  C=invert(A); break;
+		    	case (1): printf("\nSUMM\n"); C=summ(A,B); break;
+		    	case (2): printf("\nMULT\n"); C=multiplication(A,B); break;
+				case (3): printf("\nINV\n");  C=invert(A); break;
+				default: printf("ERROR KEY\n"); code_error=ERROR_KEY; break; 
 		    }
 		}
-		printf("\n");
-		print(C);
+		if(!C)
+			code_error=ERROR_NULL;
 
 	    if(code_error==OK)
 	    {
+	    	
+			//printf("\n");
+			print(C);
 		    FILE * file_out = fopen(argv[3], "w");
 			if (file_out == 0)
 			    code_error = ERROR_OPEN_OUTPUT_FILE;
@@ -67,18 +79,35 @@ int main(int argc, char const *argv[])
 
 	   	switch(code_error)
 	   	{
-	   		case(0): printf("OK\n"); break;
-	   		default: printf("BAD\n"); break;
+	   		case (ERROR_MALLOC):
+	            printf("Can`t malloc memory.\n");
+	            break;
+	        case (ERROR_ARG):
+	            printf("Not enough arguments.\n");
+	            break;
+	        case (ERROR_OPEN_INPUT_FILE):
+	            printf("Unable to open input file.\n");
+	            break;
+	        case (ERROR_OPEN_OUTPUT_FILE):
+	            printf("Unable to open output file.\n");
+	            break;
+	        case (ERROR_NULL):
+	            printf("NUll object.\n");
+	            break;
+	        case (ERROR_KEY):
+	            printf("Error command.\n");
+	            break;
 	   	}
 
 	   	erase(A);
 	   	erase(B);
 	   	erase(C);
 
-	   	free(A);
-	   	free(B);
-	   	free(C);
-	   
-
+	   	if(A)
+	   		free(A);
+	   	if(B)
+	   		free(B);
+	   	if(C)
+	   		free(C);
     }
 }

@@ -21,11 +21,19 @@ double** allocate_matrix_solid(int n, int m)
 
 struct matrix * read_matrix(FILE * file)
 {	
+	if (!file)
+		return NULL;
+
 	struct matrix * matr= malloc(sizeof(struct matrix));
+	if (!matr)
+		return NULL;
+
 	fscanf(file,"%d", &matr->n);
 	fscanf(file,"%d", &matr->m);
 
 	matr->matrix=allocate_matrix_solid(matr->n, matr->m);
+	if (!matr->matrix)
+		return NULL;
 
 	for (int i = 0; i < matr->n; ++i)
 	{
@@ -39,8 +47,15 @@ struct matrix * read_matrix(FILE * file)
 	return matr;
 }
 
-void print_to_file(FILE * file,const struct matrix *matrA)
+int print_to_file(FILE * file,const struct matrix *matrA)
 {
+	if (!matrA)
+		return ERROR_NULL;
+	if (!matrA->matrix)
+		return ERROR_NULL;
+	if (!file)
+		return ERROR_NULL;
+
 	for (int i = 0; i < matrA->n; ++i)
 	{
 		for (int j = 0; j < matrA->m-1; ++j)
@@ -51,8 +66,13 @@ void print_to_file(FILE * file,const struct matrix *matrA)
 	}
 }
 
-void print(const struct matrix *matrA)
+int print(const struct matrix *matrA)
 {
+	if (!matrA)
+		return ERROR_NULL;
+	if (!matrA->matrix)
+		return ERROR_NULL;
+
 	for (int i = 0; i < matrA->n; ++i)
 	{
 		for (int j = 0; j < matrA->m-1; ++j)
@@ -65,27 +85,23 @@ void print(const struct matrix *matrA)
 
 struct matrix * erase(struct matrix *matrA)
 {
-	/*for (int i = 0; i < matrA->n; ++i)
-	{
-		if(matrA->matrix[i]!=NULL)
-			free(matrA->matrix[i]);
-	}
-	*/
 	if(matrA->matrix)
 		free(matrA->matrix);
 	matrA->matrix=NULL;
 	return NULL;
 }
 
-
-
-
-void inversion(double **A, int N)
+int inversion(double **A, int N)
 {
     double temp;
 
  	//create E with 0
     double **E = allocate_matrix_solid(N, N);
+
+    if (!E)
+    	return ERROR_MALLOC;
+    
+
     for (int i = 0; i < N; i++)
         E[i][i] = 1.0;
  
@@ -129,8 +145,9 @@ void inversion(double **A, int N)
     for (int i = 0; i < N; i++)
         for (int j = 0; j < N; j++)
             A[i][j] = E[i][j];
- 	
-    free(E);
+ 	if(E)
+    	free(E);
+    return 0;
 }
 
 struct matrix*  invert(const struct matrix *matrA)
@@ -138,8 +155,16 @@ struct matrix*  invert(const struct matrix *matrA)
 	if (matrA->n==matrA->m)
 	{
 		struct matrix* matrC= malloc(sizeof(struct matrix));
+		if(!matrC)
+			return NULL;
 
 		matrC->matrix=allocate_matrix_solid(matrA->n, matrA->m);
+
+		
+		if(!matrC->matrix)
+			return NULL;
+		//printf("work\n");
+
 		matrC->n=matrA->n;
 		matrC->m=matrA->m;
 		for (int i = 0; i < matrA->n; ++i)
@@ -156,22 +181,23 @@ struct matrix*  invert(const struct matrix *matrA)
 
 struct matrix* summ(const struct matrix *matrA, const struct matrix *matrB)
 {
-	struct matrix* matrC= malloc(sizeof(struct matrix));
 	if((matrA->n!=matrB->n) && (matrA->m!=matrB->m))
+		return NULL;
+
+	struct matrix* matrC= malloc(sizeof(struct matrix));
+	if(!matrC)
 		return NULL;
 
 	matrC->n=matrA->n;
 	matrC->m=matrA->m;
 
 	matrC->matrix=allocate_matrix_solid(matrC->n, matrC->m);
+	if(!matrC->matrix)
+		return NULL;
 
 	for (int i = 0; i < matrA->n; ++i)
-	{
-		for (int j = 0; j < matrA->m; ++j)
-		{
+		for (int j = 0; j < matrA->m; ++j)		
 			matrC->matrix[i][j]=matrA->matrix[i][j]+matrB->matrix[i][j];
-		}
-	}
 
 	return  matrC;
 }
@@ -180,12 +206,20 @@ struct matrix* summ(const struct matrix *matrA, const struct matrix *matrB)
 struct matrix* multiplication(const struct matrix *matrA,const struct matrix *matrB)
 {
 	struct matrix* matrC= malloc(sizeof(struct matrix));
-	if(matrA->m!=matrB->n) 
+	if(!matrC)
 		return NULL;
+
+	if(matrA->m!=matrB->n)
+	{
+		printf("Неверная размерность\n");
+		return NULL;
+	}
 
 	matrC->n=matrA->n;
 	matrC->m=matrB->m;
 	matrC->matrix=allocate_matrix_solid(matrC->n, matrC->m);
+	if(!matrC->matrix)
+		return NULL;
 
 	for (int i = 0; i < matrA->n; ++i)
 	{

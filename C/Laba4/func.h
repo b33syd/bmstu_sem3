@@ -10,6 +10,8 @@
 #define ERROR_OPEN_INPUT_FILE -2
 #define ERROR_MALLOC -3
 #define ERROR_OPEN_OUTPUT_FILE -4
+#define ERROR_NULL -5
+#define ERROR_KEY -10
 
 
 struct matrix
@@ -21,7 +23,7 @@ struct matrix
 
 struct matrix* read_matrix(FILE * file);
 
-void print_to_file(FILE * file,const struct matrix *matrA);
+int  print_to_file(FILE * file,const struct matrix *matrA);
 
 struct matrix * erase(struct matrix *matrA);
 
@@ -31,7 +33,7 @@ struct matrix* summ(const struct matrix *matrA, const struct matrix *matrB);
 
 struct matrix* multiplication(const struct matrix *matrA,const struct matrix *matrB);
 
-void print(const struct matrix *matrA);
+int print(const struct matrix *matrA);
 
 
 #endif // FUNC_H
