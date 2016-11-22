@@ -42,12 +42,13 @@ int main(int argc, char const *argv[])
 			int k=0;
 			if(!strcmp(argv[4],"SUMM")) k=1;
 			if(!strcmp(argv[4],"MULT")) k=2;
+			if(!strcmp(argv[4],"INV")) k=3;
 
 		    switch(k)
 		    {
 		    	case (1): printf("SUMM\n"); C=summ(A,B); break;
 		    	case (2): printf("MULT\n"); C=multiplication(A,B); break;
-				case (3): code_error=6;
+				case (3): printf("INV\n");  C=invert(A); break;
 		    }
 		}
 		printf("\n");

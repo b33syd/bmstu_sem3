@@ -25,10 +25,12 @@ void print_to_file(FILE * file,const struct matrix *matrA);
 
 struct matrix * erase(struct matrix *matrA);
 
+struct matrix*  invert(const struct matrix *matrA);
 
 struct matrix* summ(const struct matrix *matrA, const struct matrix *matrB);
 
 struct matrix* multiplication(const struct matrix *matrA,const struct matrix *matrB);
+
 void print(const struct matrix *matrA);
 
 
