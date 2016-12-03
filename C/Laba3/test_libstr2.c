@@ -42,7 +42,7 @@ int test_readfromfile2(const char *file_name)
 		fgets(str, sizeof(str), file_in2);
 		//printf("%s",str );
 		//printf("%s",string );
-	
+		//printf("answer_to_check  %s\n",string );
 		if (!strcmp(string, str))
         	result = OK;
     	else    		
@@ -59,7 +59,7 @@ int test_readfromfile2(const char *file_name)
 	}
 
 
-	//printf("answer_to_check  %s\n",answer_to_check );
+	
 	fclose(file_in2);
 	fclose(file_in1);
     return result;
@@ -102,12 +102,17 @@ int main()
 	printf("test replace 10 %s\n", answer(test_replace("aaaaaa","aaa","","")));
 	printf("test replace 11 %s\n", answer(test_replace("aaaa","aa","aaaa","aaaaaaaa")));
 	printf("test replace 12 %s\n", answer(test_replace("aaaaa","aa","aaaa","aaaaaaaaa")));
+	printf("test replace 13 %s\n", answer(test_replace("аааа аа","аа","аааа","аааааааа аааа")));
+	printf("test replace 14 %s\n", answer(test_replace("ааааа  аа","аа","аааа","ааааааааа  аааа")));
+	printf("test replace 14 %s\n", answer(test_replace("","а","б","")));
+	
 
 	printf("test test_readfromfile 1 %s\n", answer(test_readfromfile2("tests/empty_file")));
 	printf("test test_readfromfile 2 %s\n", answer(test_readfromfile2("tests/oneline")));
 	printf("test test_readfromfile 3 %s\n", answer(test_readfromfile2("tests/twoline")));
 	printf("test test_readfromfile 4 %s\n", answer(test_readfromfile2("tests/someline")));
 	printf("test test_readfromfile 5 %s\n", answer(test_readfromfile2("tests/someline_with_one_empty")));
+	printf("test test_readfromfile 5 %s\n", answer(test_readfromfile2("tests/bigtest")));
 
 	/*#кратные буферу
 	#vtymit ,eathf
