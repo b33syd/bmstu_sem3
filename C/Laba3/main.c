@@ -19,22 +19,25 @@
 int work(FILE * file_in,FILE * file_out,const char * replace_what, const char * replace_to)
 {	
 	char *string=NULL; 
-	char *string1=NULL; 
+	char *newstring=NULL; 
 	int code_error=0;
 	size_t length=0;
 
-	while((code_error=readfromfile2(&string,&length,file_in)!=-1))
+	while((code_error=readfromfile2(&string,&length,file_in)!=-1)&&(string!=NULL))
 	{
-		string1=replace(string, replace_what,replace_to);
-		
-		fprintf(file_out,"%s",string1);
-		if(string1!=NULL)
-			free(string1);
+		newstring=replace(string, replace_what,replace_to);
+		//printf("OLD_STRING %s\n",string );
+		//printf("NEW_STRING %s\n",newstring );
+		fprintf(file_out,"%s",newstring);
+		if(newstring!=NULL)
+			free(newstring);
+
 		if(string!=NULL)
 			free(string);
-
+	
 		length=0;
 	}
+	return code_error;
 
 }
 
@@ -65,8 +68,17 @@ int main(int argc, char const *argv[])
 	    fclose(file_in);
 	}
 	switch(code_error)
-	{
-		case 0: printf("OK\n"); break;
+	{  
+        case (ERROR_ARG):
+            printf("Not enough arguments.\n");
+            break;
+        case (ERROR_OPEN_INPUT_FILE):
+            printf("Unable to open input file.\n");
+            break;
+        case (ERROR_OPEN_OUTPUT_FILE):
+            printf("Unable to open output file.\n");
+            break;
+        case(OK): break;
 		default : printf("BAD\n");
 	}
 

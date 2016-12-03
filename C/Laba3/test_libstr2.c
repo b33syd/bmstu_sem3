@@ -20,9 +20,7 @@ char *answer(int val)
     else
         printf("%s", KRED);
         
-    return answer;
-
-    
+    return answer;    
 }
 
 int test_readfromfile2(const char *file_name)
@@ -39,7 +37,7 @@ int test_readfromfile2(const char *file_name)
 	size_t length=0;
 	//printf("WORK1\n");
 
-	while((code_error=readfromfile2(&string,&length,file_in1)!=-1))
+	while((code_error=readfromfile2(&string,&length,file_in1)!=-1)&&(string!=NULL))
 	{		
 		fgets(str, sizeof(str), file_in2);
 		//printf("%s",str );
@@ -52,14 +50,12 @@ int test_readfromfile2(const char *file_name)
     	if (strlen(string)!=strlen(str))
         	result=FAIL;
     	
-
     	if(string!=NULL)
         	free(string);
         string=NULL;
 	    
 	    if(result==FAIL)
-	    	return result;
-		
+	    	return result;		
 	}
 
 
@@ -76,6 +72,7 @@ int test_replace(const char *line,  const char *replace_what, const char *replac
 	char *answer_to_check=replace(line,replace_what,replace_with);
 
 	//printf("answer_to_check  %s\n",answer_to_check );
+	//printf("%s\n",answer_to_check );
 	if (!strcmp(answer_to_check, answer))
         result = OK;
     else
@@ -103,7 +100,8 @@ int main()
 
 	printf("test replace 9 %s\n", answer(test_replace("aaaaaa","aaa","cccc","cccccccc")));
 	printf("test replace 10 %s\n", answer(test_replace("aaaaaa","aaa","","")));
-
+	printf("test replace 11 %s\n", answer(test_replace("aaaa","aa","aaaa","aaaaaaaa")));
+	printf("test replace 12 %s\n", answer(test_replace("aaaaa","aa","aaaa","aaaaaaaaa")));
 
 	printf("test test_readfromfile 1 %s\n", answer(test_readfromfile2("tests/empty_file")));
 	printf("test test_readfromfile 2 %s\n", answer(test_readfromfile2("tests/oneline")));
@@ -111,6 +109,14 @@ int main()
 	printf("test test_readfromfile 4 %s\n", answer(test_readfromfile2("tests/someline")));
 	printf("test test_readfromfile 5 %s\n", answer(test_readfromfile2("tests/someline_with_one_empty")));
 
+	/*#кратные буферу
+	#vtymit ,eathf
+	#больше буфера
+	#str str свою
+	# искать не с самого начала.
+	*/
+	
+	//aaaa aaaa a
     return 0;
 }
 
