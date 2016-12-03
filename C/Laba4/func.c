@@ -62,6 +62,7 @@ int print_to_file(FILE * file,const struct matrix *matrA)
 		return ERROR_NULL;
 	if (!file)
 		return ERROR_NULL;
+	fprintf(file, "%d %d\n",matrA->n,matrA->m);
 
 	for (int i = 0; i < matrA->n; ++i)
 	{

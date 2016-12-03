@@ -13,6 +13,10 @@
 #define ERROR_NULL -5
 #define ERROR_KEY -10
 
+#define SUMM 1
+#define MULT 2
+#define INV 3
+
 
 
 struct matrix

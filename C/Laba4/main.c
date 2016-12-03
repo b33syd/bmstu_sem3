@@ -35,17 +35,17 @@ int main(int argc, char const *argv[])
 		case(5):
 			code_error=reader(&A,argv[1]);
 			if(code_error==OK)
-				code_error=reader(&B,argv[1]);
+				code_error=reader(&B,argv[2]);
 			if(code_error==OK)
-				if(!strcmp(argv[4],"SUMM")) type_of_work=1;
-				if(!strcmp(argv[4],"MULT")) type_of_work=2;
+				if(!strcmp(argv[4],"SUMM")) type_of_work=SUMM;
+				if(!strcmp(argv[4],"MULT")) type_of_work=MULT;
 			break;
 
 		case(4):
 
 			code_error=reader(&A,argv[1]);
 			if(code_error==OK)
-				if(!strcmp(argv[3],"INV")) type_of_work=3;
+				if(!strcmp(argv[3],"INV")) type_of_work=INV;
 			break;
 
 		default:
@@ -58,15 +58,15 @@ int main(int argc, char const *argv[])
 	{
 		switch(type_of_work)
 		{
-			case (1): 
+			case (SUMM): 
 				printf("\nSUMM\n"); 
 				C=summ(A,B); 
 				break;
-			case (2):
+			case (MULT):
 				printf("\nMULT\n");
 				C=multiplication(A,B);
 				break;
-			case (3):
+			case (INV):
 				printf("\nINV\n");
 				C=invert(A);
 				break;
