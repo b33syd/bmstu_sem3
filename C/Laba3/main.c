@@ -5,7 +5,6 @@
 
 
 /*
- *
  *1) прототип фукции readfromfile? pozix-getline  ssize_t getline(char **lineptr, size_t *n, FILE *stream);
  *2) довыделяем память по одному эллементу или блоками? по блокам, но вернуть только нужную длинну
  *3) использовать ли size_t? %U
@@ -17,7 +16,7 @@
 
 
 int work(FILE * file_in,FILE * file_out,const char * replace_what, const char * replace_to)
-{	
+{
 	char *string=NULL; 
 	char *newstring=NULL; 
 	int code_error=0;
@@ -34,7 +33,6 @@ int work(FILE * file_in,FILE * file_out,const char * replace_what, const char * 
 
 		if(string!=NULL)
 			free(string);
-	
 		length=0;
 	}
 	return code_error;

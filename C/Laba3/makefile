@@ -2,12 +2,12 @@ FLAGS1 := -std=gnu99  -ggdb -Wall -Werror -pedantic
 FLAGS := -std=c99  -ggdb -Wall -Werror -pedantic
 
 main: main.o  libstr2.o 
-	gcc -o $@ $^
+	gcc -o  $@ $^
 	./main file1 fileout Medvedev Nabere
 #	./main tests/normal tests/temp/file_normal_2 tests/temp/file_normal_3
 
 %.o: %.c *.h 
-	gcc   -c $<
+	gcc  $(FLAGS) -c $<
 
 test:
 	./main
