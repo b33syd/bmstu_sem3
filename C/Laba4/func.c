@@ -31,6 +31,13 @@ struct matrix * read_matrix(FILE * file)
 	fscanf(file,"%d", &matr->n);
 	fscanf(file,"%d", &matr->m);
 
+	if((matr->n==0)||(matr->m==0))
+	{	
+		
+		free(matr);
+		return NULL;
+	}
+
 	matr->matrix=allocate_matrix_solid(matr->n, matr->m);
 	if (!matr->matrix)
 		return NULL;
@@ -64,6 +71,7 @@ int print_to_file(FILE * file,const struct matrix *matrA)
 		}
 		fprintf(file, "%lf\n",matrA->matrix[i][matrA->m-1]);
 	}
+	return OK;
 }
 
 int print(const struct matrix *matrA)
@@ -81,13 +89,18 @@ int print(const struct matrix *matrA)
 		}
 		printf( "%lf\n",matrA->matrix[i][matrA->m-1]);
 	}
+	return OK;
 }
 
 struct matrix * erase(struct matrix *matrA)
 {
-	if(matrA->matrix)
-		free(matrA->matrix);
-	matrA->matrix=NULL;
+	if(matrA)
+	{
+
+		if(matrA->matrix)
+			free(matrA->matrix);
+		matrA->matrix=NULL;
+	}
 	return NULL;
 }
 
@@ -175,14 +188,19 @@ struct matrix*  invert(const struct matrix *matrA)
 		return matrC;
 	}
 	else
+	{
+		printf("Неверная размерность\n");
 		return NULL;
+	}
 }
 
 
 struct matrix* summ(const struct matrix *matrA, const struct matrix *matrB)
 {
-	if((matrA->n!=matrB->n) && (matrA->m!=matrB->m))
+	if((matrA->n!=matrB->n) || (matrA->m!=matrB->m))
+	{	printf("Неверная размерность\n");
 		return NULL;
+	}
 
 	struct matrix* matrC= malloc(sizeof(struct matrix));
 	if(!matrC)

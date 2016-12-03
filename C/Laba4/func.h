@@ -14,6 +14,7 @@
 #define ERROR_KEY -10
 
 
+
 struct matrix
 {
 	int n;
