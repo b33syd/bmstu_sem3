@@ -113,13 +113,22 @@ int main(int argc, char const *argv[])
 {
 	printf("test_sum_1 \t%s\n", answer(check("tests/square1","tests/square2","tests/answer2",SUMM)));
 	printf("test_sum_2 \t%s\n", answer(check("tests/square2","tests/square1","tests/answer2",SUMM)));
+	printf("test_sum_2 \t%s\n", answer(check("tests/col1","tests/col2","tests/answer6",SUMM)));
+	printf("test_sum_2 \t%s\n", answer(check("tests/col2","tests/col1","tests/answer6",SUMM)));
+	printf("test_sum_2 \t%s\n", answer(check("tests/row1","tests/row2","tests/answer7",SUMM)));
+	printf("test_sum_2 \t%s\n", answer(check("tests/row2","tests/row1","tests/answer7",SUMM)));
 
 	printf("test_mult_1 \t%s\n", answer(check("tests/square1","tests/square2","tests/answer1",MULT)));
 	printf("test_mult_2 \t%s\n", answer(check("tests/square2","tests/square1","tests/answer5",MULT)));
-
+	printf("test_mult_3 \t%s\n", answer(check("tests/col1","tests/row1","tests/answer8",MULT)));
+	printf("test_mult_4 \t%s\n", answer(check("tests/col2","tests/row1","tests/answer9",MULT)));
+	printf("test_mult_5 \t%s\n", answer(check("tests/col1","tests/row2","tests/answer10",MULT)));
+	printf("test_mult_6 \t%s\n", answer(check("tests/col2","tests/row2","tests/answer11",MULT)));
 
 	printf("test_inv_1 \t%s\n", answer(check("tests/square1","","tests/answer3",INV)));
 	printf("test_inv_2 \t%s\n", answer(check("tests/square2","","tests/answer4",INV)));
+	printf("test_inv_3 \t%s\n", answer(check("tests/test3","","tests/answer12",INV)));
+	printf("test_inv_4 \t%s\n", answer(check("tests/test2","","tests/answer13",INV)));
 	
 	return 0;
 }

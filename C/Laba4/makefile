@@ -1,14 +1,13 @@
-FLAGS1 := -std=gnu99  -ggdb -Wall -Werror -pedantic
-FLAGS := -std=c99  -ggdb -Wall -Werror -pedantic
+FLAGS := -std=c99   -ggdb -Wall -Werror -pedantic 
 
 main: main.o  func.o
-	gcc -o $@ $^
+	gcc -o $@ $^ -lm
 	./main fileA fileB fileout SUMM
 	./main fileA fileB fileout MULT
-	./main fileA fileout INV
+	valgrind ./main fileA fileout INV
 
 %.o: %.c *.h 
-	gcc $(FLAGS) -c $<
+	gcc $(FLAGS) -c $< -lm
 
 
 test:
@@ -17,8 +16,8 @@ test:
 	./main fileA fileB fileout INV
 
 
-test_libstr2: test_libstr2.o libstr2.o
-	gcc -o $@ $^
+tester: tester.o func.o
+	gcc $(FLAGS) -o $@ $^ -lm
 	./$@
 
 gcov: main.c list.c

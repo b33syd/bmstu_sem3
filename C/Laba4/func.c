@@ -1,5 +1,5 @@
 #include "func.h"
-
+#include <math.h>
 double** allocate_matrix_solid(int n, int m)
 {
     double **data = malloc(n * sizeof(double*) + n * m * sizeof(double));
@@ -166,6 +166,14 @@ int inversion(double **A, int N)
 
 struct matrix*  invert(const struct matrix *matrA)
 {
+	double k=opredel(matrA->matrix,matrA->n);
+	if (fabs(k)<0.0001)
+	{
+		printf("Нулевой определитель\n");
+		return NULL;
+	}
+
+	
 	if (matrA->n==matrA->m)
 	{
 		struct matrix* matrC= malloc(sizeof(struct matrix));
@@ -251,4 +259,55 @@ struct matrix* multiplication(const struct matrix *matrA,const struct matrix *ma
 		}
 	}
 	return  matrC;
+}
+
+
+
+double ** minor(double** mas2,int mas2_size,int not_i, int not_j)
+{
+    double** mas=allocate_matrix_solid(mas2_size-1,mas2_size-1);
+    int i2=0;
+    for (int i = 0; i < mas2_size; i++)
+    {
+    	if(i==not_i) continue;
+        int j2 = 0;
+        for (int j = 0; j < mas2_size; j++)
+        {
+            if (j == not_j) continue;
+            mas[i2][j2] = mas2[i][j];
+            j2++;
+        }
+
+        i2++;
+    }
+    return mas;
+}
+
+double opredel(double** mas, int n)
+{
+    double A = 0;
+    int k=1; //(-1) в степени i
+    if (n == 1)
+    {
+        return mas[0][0];
+    }
+    else
+    {
+        if (n == 2)
+        {
+            return mas[0][0] * mas[1][1] - mas[0][1] * mas[1][0];
+        }
+        else
+        {
+            for (int i = 0; i < n; i++)
+            {
+                double **test_minor = minor(mas, n, i,0);
+                double opr = opredel(test_minor, n - 1);
+                A += k * mas[i][0] * opr;
+                k=-k;
+                free(test_minor);
+            }
+            return A;
+        }
+    }
 }

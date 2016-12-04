@@ -40,5 +40,7 @@ struct matrix* multiplication(const struct matrix *matrA,const struct matrix *ma
 
 int print(const struct matrix *matrA);
 
+double ** minor(double** mas2,int mas2_size,int not_i, int not_j);
+double opredel(double** mas, int n);
 
 #endif // FUNC_H
