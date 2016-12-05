@@ -9,7 +9,7 @@
 #define ERROR_ARG -4
 #define OK 0
 
-#define DEBUG 5
+#define DEBUG 10
 
 void debug(char* str,int lev)
 {
@@ -118,21 +118,23 @@ int main(int argc, char **argv)
             array_end = array + array_length;
             debug("14",6);
             printarray(array,array_end);
-            /*debug("15",6);
+            debug("15",6);
             
             int *filtered;
             int *filtered_end;
             
             debug("16",6);
             status_work=filter(array, array_end,&filtered,&filtered_end);;
-            debug("17",6);
+            debug("20",6);
             printarray(filtered,filtered_end);
-            debug("18",6);
-            */
-            mod_insertion_sort(array, array_end);
+            debug("21",6);
+            
+            //mod_insertion_sort(array, array_end);
+            mod_insertion_sort(filtered,filtered_end-filtered,4,compare_int_less);
 
             debug("17",6);
-            printarray(array, array_end);
+            //printarray(array, array_end);
+            printarray(filtered,filtered_end);
             debug("18",6);
 
 
