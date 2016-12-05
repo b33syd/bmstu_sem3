@@ -27,7 +27,7 @@ void time_compare(BT<int> &tree){
 
     inp.open("/home/alexey/repos/bmstu_sem3/TiSD/Tisd6/file1",ios::in);
     inp.seekp(0, ios::end);
-    int add=rand_int(1000);
+    int add=rand_int(100);
     t1=clock();
     inp<<add<<endl;
     t2=clock();
@@ -104,9 +104,9 @@ int main(int argc, char* argv[]) {
                 tree.levels();
                 break;
             case 8:
-                cout << "1: Сверху вниз (корень, левый, правый) - префиксный обход" << endl;
-                cout << "2: Слева направо (левый, корень, правый) - инфиксный обход (сортировка)" << endl;
-                cout << "3: Сверху вниз (левый, правый, корень) - постфиксный обход" << endl;
+                cout << "1: Сверху-вниз (корень, левый, правый) - префиксный обход" << endl;
+                cout << "2: Слева-направо (левый, корень, правый) - инфиксный обход (сортировка)" << endl;
+                cout << "3: Сверху-вниз (левый, правый, корень) - постфиксный обход" << endl;
                 cin >> b;
                 switch(b) {
                     case 1: tree.RootLeftRight(); break;

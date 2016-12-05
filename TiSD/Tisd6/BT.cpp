@@ -42,9 +42,6 @@ private:
     void remove(element<T> *prev, element<T> *tmp);
     void count_levels(element<T>*tmp, int deep,vector<int>& vector1);
     void print(element<T>* tmp, int deep, bool flag, char c = '\0');
-    //void print_tree(element<T> *h, char c = '\0');
-    //int for_find_letter(element* tmp, char c = '\0');
-    //bool printable = true;
     void printer(element<T>*tmp, element<T>*parent, FILE *graph);
 
 public:
@@ -91,7 +88,6 @@ public:
     }
 
 };
-
 
 
 template<typename T>
@@ -197,7 +193,7 @@ bool BT<T>::remove(T x) {
             return true;
         }
         prev = tmp;
-        if (cmp < 0) {
+        if (cmp < x) {
             if (tmp->right) {
                 tmp = tmp->right;
             } else {
@@ -214,7 +210,6 @@ bool BT<T>::remove(T x) {
     }
 
 }
-
 
 template<typename T>
 void BT<T>::delete_tree(element<T> *tmp) {
@@ -319,6 +314,7 @@ void BT<T>::print(element<T>*tmp, int deep, bool flag, char c) {
         cout << "-----" << endl;
     }
 }
+
 template<typename T>
 void BT<T>::show_as_tree(char c) {
     print(head, 0, true, c);
@@ -346,6 +342,7 @@ void BT<T>::printer(element<T>*tmp, element<T>*parent, FILE *graph) {
         printer(tmp->right, tmp, graph);
     }
 }
+
 template <typename T>
 void BT<T>::count_levels(element<T>*tmp, int deep,vector<int>& vector1) {
 
