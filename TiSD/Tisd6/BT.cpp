@@ -5,8 +5,7 @@
 #include <cstring>
 #include <fstream>
 #include <vector>
-#define ANSI_COLOR_RESET   "\x1b[0m"
-#define KRED  "\x1B[31m"
+
 using namespace std;
 
 template<typename T>
@@ -39,36 +38,42 @@ private:
 
     void delete_tree(element<T> *tmp);
 
-    void remove(element<T> *prev, element<T> *tmp);
+
     void count_levels(element<T>*tmp, int deep,vector<int>& vector1);
-    void print(element<T>* tmp, int deep, bool flag, char c = '\0');
+    void print(element<T>* tmp, int deep, bool flag);
     void printer(element<T>*tmp, element<T>*parent, FILE *graph);
+
+    void swap(element<T> *greater, element<T> *smaller);
+    element<T>* del(element<T> *tree, T val);
+    element<T> *delete_node(element<T> *tree, T val);
+    element<T> *the_most_right(element<T> *tree);
+    element<T>* lookup(element<T> *tree, T val);
 
 public:
     BT(const BT &obj);
-
     BT() {
         head = NULL;
         //printable = true;
     }
-
-    //int find_letter(char c);
-
     BT &operator=(const BT &obj) {
         operator_copy(&head, obj.head);
     }
     void levels() ;
     void insert(T x);
     void printer();
-    bool remove(T x);
+
+    bool remove2(T x);
+
+
+
 
     ~BT() {
-        //log("~");
+
         delete_tree(head);
         head = NULL;
     }
-    //void show(char c = '\0');
-    void show_as_tree(char c = '\0');
+
+    void show_as_tree();
 
     bool find(T x);
 
@@ -131,85 +136,164 @@ void BT<T>::insert(T x) {
     }
 }
 
-template<typename T>
-void BT<T>::remove(element<T> *prev, element<T> *tmp) {
-    element<T> *b = NULL;
-    int flag = 0;
-    if ((!tmp->left) && (!tmp->right)) {
-        b = NULL;
-        flag = 1;
-    }
-    if (tmp->left && !tmp->right) {
-        b = tmp->left;
-        flag = 1;
-    }
-    if (!tmp->left && tmp->right) {
-        b = tmp->right;
-        flag = 1;
-    }
-    if (flag) {
-        if (prev == NULL || prev == tmp) {
-            head = b;
-        }
-        if (prev->left == tmp) {
-            prev->left = b;
-        } else if (prev->right == tmp) {
-            prev->right = b;
-        }
-        delete tmp;
-        return;
-    }
-    element<T> *a = tmp->right;
-    element<T> *new_elem = tmp;
-    while (a) {
+///////////////////////////////////////////////////////////////////////////////////////////
 
-        if (a->left) {
-            new_elem = a;
-            a = a->left;
-        } else {
-            break;
-        }
-    }
-    tmp->value = a->value;
-    if (new_elem->left == a) {
-        new_elem->left = a->right;
-    } else {
-        new_elem->right = a->right;
-    }
-    delete a;
+
+template<typename T>
+bool BT<T>::remove2(T x) {
+    head=delete_node(head, x);
 }
 
 template<typename T>
-bool BT<T>::remove(T x) {
-    element<T>*tmp = head;
-    element<T>*prev = NULL;
-    int cmp = 0;
-    while (1) {
-        if (!tmp) {
-            return false;
-        }
-        if (x == tmp->value) {
-            remove(prev, tmp);
-            return true;
-        }
-        prev = tmp;
-        if (cmp < x) {
-            if (tmp->right) {
-                tmp = tmp->right;
-            } else {
-                return false;
-            }
-        } else {
-            if (tmp->left) {
+element<T>* BT<T>::del(element<T> *tree, T val)
+{
+    if (tree == NULL)
+    {
 
-                tmp = tmp->left;
-            } else {
-                return false;
-            }
+        return tree;
+    }
+    else if (tree->value== val)
+    {
+        //puts("AGA");
+        if (tree->left == NULL && tree->right == NULL)
+        {
+            //element<T>(tree);
+            //puts("Element deleted!");
+            return NULL;
+        }
+        else if (tree->left == NULL)
+        {
+            element<T> *tmp = tree->right;
+            free(tree);
+            //puts("Element deleted!");
+            return tmp;
+        }
+        else if (tree->right == NULL)
+        {
+            element<T> *tmp = tree->left;
+            free(tree);
+            //puts("Element deleted!");
+            return tmp;
+        }
+        else
+        {
+            element<T> *tmp = the_most_right(tree->left);
+            //printf("%d\n", tmp->val);
+            swap(tree, tmp);
+            //puts("Element deleted!");
+            return tree;
         }
     }
-
+    else
+    {
+        //puts("TUTU");
+        //printf("root: %d; val: %d\n", tree->val, val);
+        element<T> *cur = tree;
+        element<T> *dad = NULL;
+        while (cur != NULL)
+        {
+            //printf("cur: %d\n", cur->val);
+            if (cur->value== val)
+            {
+                break;
+            }
+            else if (cur->value> val)
+            {
+                dad = cur;
+                cur = cur->left;
+            }
+            else
+            {
+                dad = cur;
+                cur = cur->right;
+            }
+        }
+        if (cur == NULL)
+        {
+            puts("Could not find the element in tree.");
+            return tree;
+        }
+        if (cur->left == NULL && cur->right == NULL)
+        {
+            if (dad->value< val)
+                dad->right = NULL;
+            else
+                dad->left = NULL;
+            //free_tree(cur);
+        }
+        else if (cur->left == NULL)
+        {
+            if (dad->value< val)
+                dad->right = cur->right;
+            else
+                dad->left = cur->right;
+            free(cur);
+        }
+        else if (cur->right == NULL)
+        {
+            if (dad->value< val)
+                dad->right = cur->left;
+            else
+                dad->left = cur->left;
+            free(cur);
+        }
+        else
+        {
+            element<T> *tmp = the_most_right(cur->left);
+            swap(cur, tmp);
+        }
+        //puts("Element deleted!");
+        return tree;
+    }
 }
+
+template<typename T>
+element<T>* BT<T>::lookup(element<T> *tree, T val)
+{
+    if (tree == NULL)
+        return NULL;
+
+    if (val == tree->value)
+        return tree;
+    else if (val < tree->value)
+        return lookup(tree->left, val);
+    else
+        return lookup(tree->right, val);
+}
+
+template<typename T>
+element<T> *BT<T>::delete_node(element<T> *tree, T val)
+{
+    element<T> *tmp = lookup(tree, val);
+    //memory_check(tmp, NULL, "Nothing was found!");
+
+    tree = del(tree, val);
+    return tree;
+}
+
+template<typename T>
+element<T> *BT<T>::the_most_right(element<T> *tree)
+{
+    if (tree->left == NULL && tree->right == NULL)
+        return tree;
+    else if (tree == NULL)
+        return NULL;
+    else if (tree->right == NULL)
+        return tree;
+    else
+        return the_most_right(tree->right);
+}
+template<typename T>
+void BT<T>::swap(element<T> *greater, element<T> *smaller)
+{
+    int tmp_val = smaller->value;
+    del(greater, smaller->value);
+    greater->value = tmp_val;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+
+
 
 template<typename T>
 void BT<T>::delete_tree(element<T> *tmp) {
@@ -288,22 +372,19 @@ bool BT<T>::find(T x) {
 }
 
 template <typename T>
-void BT<T>::print(element<T>*tmp, int deep, bool flag, char c) {
+void BT<T>::print(element<T>*tmp, int deep, bool flag) {
     if(tmp) {
         for (int i = 0; i < deep - 1; i++) {
             cout << "|    ";
         }
         if (deep >= 1)
             cout << "|----";
-        if(c && tmp->value == c) {
-            printf(KRED);
-        }
         cout << tmp->value << endl;
-        printf(ANSI_COLOR_RESET);
+
         flag = false;
         if(tmp->left || tmp->right) { flag = true; }
-        print(tmp->left, deep + 1, flag, c);
-        print(tmp->right, deep + 1, flag, c);
+        print(tmp->left, deep + 1, flag);
+        print(tmp->right, deep + 1, flag);
     }
     else if(flag) {
         for (int i = 0; i < deep - 1; i++) {
@@ -316,8 +397,8 @@ void BT<T>::print(element<T>*tmp, int deep, bool flag, char c) {
 }
 
 template<typename T>
-void BT<T>::show_as_tree(char c) {
-    print(head, 0, true, c);
+void BT<T>::show_as_tree() {
+    print(head, 0, true);
 }
 
 template <typename T>
@@ -325,6 +406,8 @@ void BT<T>::printer() {
 
     FILE *graph = fopen("/tmp/graph.gv", "w");
     fprintf(graph, "digraph G{\n");
+    if(head !=NULL)
+        fprintf(graph, "%d\n",head->value);
     printer(head, NULL, graph);
     fprintf(graph, "}");
     fclose(graph);

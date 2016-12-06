@@ -3,6 +3,7 @@
 #include "BT.cpp"
 #include <unistd.h>
 
+char * filename="/home/alexey/repos/bmstu_sem3/TiSD/Tisd6/file1";
 using namespace std;
 int rand_int(int n) {
     srand(time(0));
@@ -12,7 +13,7 @@ int rand_int(int n) {
 void read_from_file(BT<int> &tree)
 {
     ifstream inp;
-    inp.open("/home/alexey/repos/bmstu_sem3/TiSD/Tisd6//file1");
+    inp.open(filename);
     if(!inp.is_open()) { cout << "Cannot open file" << endl; return; }
     int x;
     while(inp >> x) {
@@ -25,7 +26,7 @@ void time_compare(BT<int> &tree){
     int t1,t2,t3,t4;
     ofstream inp;
 
-    inp.open("/home/alexey/repos/bmstu_sem3/TiSD/Tisd6/file1",ios::in);
+    inp.open(filename,ios::in);
     inp.seekp(0, ios::end);
     int add=rand_int(100);
     t1=clock();
@@ -79,12 +80,7 @@ int main(int argc, char* argv[]) {
                 //Удаление
                 cout << "Введите число: " << endl;
                 cin >> tmp;
-                if(tree.remove(tmp)) {
-                    cout << "Число удалено" << endl;
-                }
-                else {
-                    cout << "Дерево не содержит числа" << endl;
-                }
+                tree.remove2(tmp);
                 break;
             case 5:
                 //Поиск
@@ -116,9 +112,24 @@ int main(int argc, char* argv[]) {
                 }
                 break;
             case 9:
+
+                /*
+                for (int i = 0; i <10 ; ++i) {
+                    for (int j = 0; j < 100; ++j) {
+
+                        tree.insert(i*100+j);
+
+                    }
+                    cout<<i*10<<endl;
+                    time_compare(tree);
+
+
+                }
+                */
+
                 return 0;
             default:
-                cout << "Команда не найдена";
+                cout << "Error command";
                 break;
         }
     }
