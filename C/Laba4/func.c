@@ -1,5 +1,7 @@
 #include "func.h"
 #include <math.h>
+//Добавить функцию освоюождания памяти
+
 double** allocate_matrix_solid(int n, int m)
 {
     double **data = malloc(n * sizeof(double*) + n * m * sizeof(double));
@@ -23,11 +25,12 @@ struct matrix * read_matrix(FILE * file)
 {	
 	if (!file)
 		return NULL;
-
+//Зачем?
 	struct matrix * matr= malloc(sizeof(struct matrix));
 	if (!matr)
 		return NULL;
 
+//Контроль чтения
 	fscanf(file,"%d", &matr->n);
 	fscanf(file,"%d", &matr->m);
 
@@ -47,6 +50,7 @@ struct matrix * read_matrix(FILE * file)
 		
 		for (int j = 0; j < matr->m; ++j)
 		{
+//Контроль чтения
 			fscanf(file,"%lf", &matr->matrix[i][j]);
 		}
 	}
