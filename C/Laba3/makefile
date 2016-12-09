@@ -1,9 +1,9 @@
 FLAGS1 := -std=gnu99  -ggdb -Wall -Werror -pedantic
-FLAGS := -std=c99  -ggdb -Wall -Werror -pedantic
+FLAGS := -std=gnu99  -ggdb -Wall -Werror -pedantic
 
 main: main.o  libstr2.o 
 	gcc -o  $@ $^
-	./main file1 fileout Medvedev Nabere
+	./main file1 fileout name NAME
 #	./main tests/normal tests/temp/file_normal_2 tests/temp/file_normal_3
 
 %.o: %.c *.h 

@@ -29,11 +29,11 @@ int test_readfromfile2(const char *file_name)
 	FILE * file_in2 = fopen(file_name, "r");
 	int result=OK;
 	int code_error=0;
-	char *answer_to_check;
+	//char *answer_to_check;
 
 	char* string=NULL;
 	char str[256];
-	size_t len=0;
+	//size_t len=0;
 	size_t length=0;
 	//printf("WORK1\n");
 
@@ -100,6 +100,9 @@ int main()
 
 	printf("test replace 9 %s\n", answer(test_replace("aaaaaa","aaa","cccc","cccccccc")));
 	printf("test replace 10 %s\n", answer(test_replace("aaaaaa","aaa","","")));
+
+printf("test replace 16 %s\n", answer(test_replace("","","","")));
+
 	printf("test replace 11 %s\n", answer(test_replace("aaaa","aa","aaaa","aaaaaaaa")));
 	printf("test replace 12 %s\n", answer(test_replace("aaaaa","aa","aaaa","aaaaaaaaa")));
 	printf("test replace 13 %s\n", answer(test_replace("аааа аа","аа","аааа","аааааааа аааа")));
