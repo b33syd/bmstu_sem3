@@ -68,16 +68,6 @@ void printarray_to_file(int *array, int *array_end,FILE *file)
 
 }
 
-
-
-
-
-
-
-
-
-
-
 int main(int argc, char **argv)
 {	
 	debug("10",6);
@@ -130,8 +120,12 @@ int main(int argc, char **argv)
             debug("21",6);
             
             //mod_insertion_sort(array, array_end);
+            unsigned long long tb, te;
+            //Среднеее 50 замеров
+            tb = tick();
             mod_insertion_sort(filtered,filtered_end-filtered,4,compare_int_less);
-
+            te = tick();
+            printf("test 'time': %llu\n", (te - tb) );
             debug("17",6);
             //printarray(array, array_end);
             printarray(filtered,filtered_end);

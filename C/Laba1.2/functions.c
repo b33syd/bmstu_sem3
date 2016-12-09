@@ -146,12 +146,12 @@ int compare_int_less(const void *val1, const void *val2)
 
 char* bin_search(char* array, char* array_end, char* val,int size,int (*comparator)(const void *, const void *))
 {
-    //printf("SEARCH1 %p  %p \n",array,array_end);
+     int n=(array_end-array)/size;
     while(array<array_end)
     {
         //printf("SEARCH2\n");
         //printf("                %d          %d\n",(array_end-array),0);
-        int n=(array_end-array)/size;
+       
         char *med=array+n/2*size;
 
         if(comparator(med,val)>0)
@@ -171,61 +171,16 @@ void mod_insertion_sort(void *adr,const size_t nmemb,const size_t size_of_el, in
     char *array =(char *) adr;
     char *array_tmp =(char *) adr;
     char *tmp=malloc(size_of_el);
-    char *array_end=array+size_of_el*nmemb;
-    char *cp;
-
-    //void *tmp1=array;
-    //void tmp
-    while(array!=array_end)
+    //char *array_end=array+size_of_el*nmemb;
+    char *pos;
+   
+    while(array!=array_tmp+size_of_el*nmemb)
     {
         memcpy(tmp,array,size_of_el);
-        
-        char *pos=bin_search(array_tmp,array,tmp,size_of_el,comparator);
-        //printf("%d  %d  %d\n",array_tmp, pos, array );
-        //memmove(pos,array,array-pos);
-        cp=array;
-       // printf("%d\n", cp);
-        while(cp!=pos)
-        {
-            memcpy(cp,cp-size_of_el, size_of_el);
-            cp=cp -size_of_el;
-        }
-
+        pos=bin_search(array_tmp,array,tmp,size_of_el,comparator);
+        memmove(pos+size_of_el,pos,array-pos );
         memcpy(pos,tmp,size_of_el);
-        array=array+size_of_el;
+        array+=size_of_el;
     }
     free(tmp);
 }
-/*
-//Checked
-void mod_insertion_sort(int *array, int *array_end)
-{
-    
-    int *tmp1=array;
-    int tmp;
-    int *cp;
-    //printf("SORT1\n");
-    //printarray(array, array_end);
-
-    while(array!=array_end)
-    {   
-        tmp=*array;
-        cp=array;
-        //printf("SORT2\n");
-        int *pos=bin_search(tmp1,array,*array);
-        
-        //printf("SORT3\n");
-      //  printarray(array, array_end);
-        while(cp!=pos)
-        {
-            *cp=*(cp-1);
-            cp--;
-        }
-        //printf("SORT4\n");
-        *cp=tmp;
-        
-        array++;
-    }
-
-}
-*/
