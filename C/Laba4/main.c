@@ -11,12 +11,8 @@ int reader(struct matrix** Matr,const char* filename)
 	}
 	else
 	{	
-		*Matr=read_matrix(file_in);
+		*Matr=read_matrix(file_in,&code_error);
 		fclose(file_in);
-		
-		if(!*Matr)
-			code_error=ERROR_NULL;
-		
 	}
 	return code_error;
 }
@@ -60,15 +56,15 @@ int main(int argc, char const *argv[])
 		{
 			case (SUMM): 
 				printf("\nSUMM\n"); 
-				C=summ(A,B); 
+				C=summ(A,B,&code_error); 
 				break;
 			case (MULT):
 				printf("\nMULT\n");
-				C=multiplication(A,B);
+				C=multiplication(A,B,&code_error);
 				break;
 			case (INV):
 				printf("\nINV\n");
-				C=invert(A);
+				C=invert(A,&code_error);
 				break;
 			default:
 				//printf("ERROR KEY\n");
@@ -118,20 +114,24 @@ int main(int argc, char const *argv[])
 		case (ERROR_KEY):
 			printf("Error params.\n");
 			break;
+		case (ERROR_SIZE):
+			printf("Неверная размерность.\n");
+			break;
+		case (NULL_OPR):
+			printf("Нулевой определитель.\n");
+			break;
+		case (ERROR_INPUT):
+			printf("Ошибка чтения.\n");
+			break;
 	}
 		
 		
-	erase(A);
-	erase(B);
-	erase(C);
+	A=erase(A);
+	B=erase(B);
+	C=erase(C);
 
-	if(A)
-		free(A);
-	if(B)
-		free(B);
-	if(C)
-		free(C);
+	
 		
-	return code_error;
+	return OK;
 }
 

@@ -11,8 +11,10 @@
 #define ERROR_MALLOC -3
 #define ERROR_OPEN_OUTPUT_FILE -4
 #define ERROR_NULL -5
+#define ERROR_SIZE -6
+#define NULL_OPR -7
+#define ERROR_INPUT -8
 #define ERROR_KEY -10
-
 #define SUMM 1
 #define MULT 2
 #define INV 3
@@ -26,21 +28,23 @@ struct matrix
 	double **matrix;
 };
 
-struct matrix* read_matrix(FILE * file);
+struct matrix* read_matrix(FILE * file, int *codeerror);
 
 int  print_to_file(FILE * file,const struct matrix *matrA);
 
 struct matrix * erase(struct matrix *matrA);
 
-struct matrix*  invert(const struct matrix *matrA);
+struct matrix*  invert(const struct matrix *matrA, int *codeerror);
 
-struct matrix* summ(const struct matrix *matrA, const struct matrix *matrB);
+struct matrix* summ(const struct matrix *matrA, const struct matrix *matrB, int *codeerror);
 
-struct matrix* multiplication(const struct matrix *matrA,const struct matrix *matrB);
+struct matrix* multiplication(const struct matrix *matrA,const struct matrix *matrB, int *codeerror);
 
 int print(const struct matrix *matrA);
 
 double ** minor(double** mas2,int mas2_size,int not_i, int not_j);
+
 double opredel(double** mas, int n);
+
 
 #endif // FUNC_H

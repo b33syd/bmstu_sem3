@@ -2,8 +2,8 @@ FLAGS := -std=c99   -ggdb -Wall -Werror -pedantic
 
 main: main.o  func.o
 	gcc -o $@ $^ -lm
-	./main fileA fileB fileout SUMM
 	./main fileA fileB fileout MULT
+	./main fileA fileB fileout SUMM
 	valgrind ./main fileA fileout INV
 
 %.o: %.c *.h 

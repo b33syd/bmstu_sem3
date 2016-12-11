@@ -11,7 +11,7 @@ double** allocate_matrix_solid(int n, int m)
     for (int i = 0; i < n; i++)
         data[i] = (double*)((char*) data +  n * sizeof(double*) + i * m * sizeof(double));
 
-    //is need?
+   
     for (int i = 0; i < n; i++)
     {
     	for (int j = 0; j < m; j++)
@@ -21,18 +21,27 @@ double** allocate_matrix_solid(int n, int m)
     return data;
 }
 
-struct matrix * read_matrix(FILE * file)
+
+
+struct matrix * read_matrix(FILE * file,int *codeerror)
 {	
+
+	*codeerror =OK;
 	if (!file)
 		return NULL;
-//Зачем?
+
 	struct matrix * matr= malloc(sizeof(struct matrix));
 	if (!matr)
 		return NULL;
 
-//Контроль чтения
-	fscanf(file,"%d", &matr->n);
-	fscanf(file,"%d", &matr->m);
+	//Контроль чтения
+	if(fscanf(file,"%d %d", &matr->n,&matr->m)!=2)
+	{
+		*codeerror=ERROR_INPUT;
+		free(matr);
+		//printf("Error Input\n");
+		return NULL;		
+	}
 
 	if((matr->n==0)||(matr->m==0))
 	{	
@@ -43,15 +52,24 @@ struct matrix * read_matrix(FILE * file)
 
 	matr->matrix=allocate_matrix_solid(matr->n, matr->m);
 	if (!matr->matrix)
+	{
+		free(matr);
 		return NULL;
+	}
 
 	for (int i = 0; i < matr->n; ++i)
 	{
 		
 		for (int j = 0; j < matr->m; ++j)
 		{
-//Контроль чтения
-			fscanf(file,"%lf", &matr->matrix[i][j]);
+			//Контроль чтения
+			if(fscanf(file,"%lf", &matr->matrix[i][j])!=1)
+			{
+				*codeerror=ERROR_INPUT;
+				erase(matr);
+				//printf("Error Input\n");
+				return NULL;		
+			}
 		}
 	}
 
@@ -101,10 +119,10 @@ struct matrix * erase(struct matrix *matrA)
 {
 	if(matrA)
 	{
-
 		if(matrA->matrix)
 			free(matrA->matrix);
 		matrA->matrix=NULL;
+		free(matrA);
 	}
 	return NULL;
 }
@@ -168,12 +186,14 @@ int inversion(double **A, int N)
     return 0;
 }
 
-struct matrix*  invert(const struct matrix *matrA)
+struct matrix*  invert(const struct matrix *matrA, int *codeerror)
 {
+	*codeerror=OK;
 	double k=opredel(matrA->matrix,matrA->n);
 	if (fabs(k)<0.0001)
 	{
-		printf("Нулевой определитель\n");
+		*codeerror=NULL_OPR;
+		//printf("Нулевой определитель\n");
 		return NULL;
 	}
 
@@ -202,16 +222,20 @@ struct matrix*  invert(const struct matrix *matrA)
 	}
 	else
 	{
-		printf("Неверная размерность\n");
+		*codeerror=ERROR_SIZE;
+		//printf("Неверная размерность\n");
 		return NULL;
 	}
 }
 
 
-struct matrix* summ(const struct matrix *matrA, const struct matrix *matrB)
+struct matrix* summ(const struct matrix *matrA, const struct matrix *matrB,int *codeerror)
 {
+	*codeerror=OK;
 	if((matrA->n!=matrB->n) || (matrA->m!=matrB->m))
-	{	printf("Неверная размерность\n");
+	{	
+		*codeerror=ERROR_SIZE;
+		//printf("Неверная размерность\n");
 		return NULL;
 	}
 
@@ -234,15 +258,18 @@ struct matrix* summ(const struct matrix *matrA, const struct matrix *matrB)
 }
 
 
-struct matrix* multiplication(const struct matrix *matrA,const struct matrix *matrB)
+struct matrix* multiplication(const struct matrix *matrA,const struct matrix *matrB,int *codeerror)
 {
+	*codeerror=OK;
+
 	struct matrix* matrC= malloc(sizeof(struct matrix));
 	if(!matrC)
 		return NULL;
 
 	if(matrA->m!=matrB->n)
 	{
-		printf("Неверная размерность\n");
+		*codeerror=ERROR_SIZE;
+		//printf("Неверная размерность\n");
 		return NULL;
 	}
 

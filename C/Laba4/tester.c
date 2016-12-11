@@ -11,7 +11,6 @@ int compare(const struct matrix *A, const struct matrix *B)
 {
 	double a,b;
 	
-	//printf("%d %d  %d  %d\n",A->n,A->m,B->n,B->m);
 	if((((B->n)!=(A->n))||((B->m)!=(A->m))))
 		return BAD;	
 
@@ -41,7 +40,7 @@ int reader(struct matrix** Matr,const char* filename)
 	}
 	else
 	{	
-		*Matr=read_matrix(file_in);
+		*Matr=read_matrix(file_in,&code_error);
 		fclose(file_in);
 		
 		if(!*Matr)
@@ -58,7 +57,7 @@ int check(char * file1, char* file2, char* answer, int type)
 	struct matrix* B=NULL;
 	struct matrix* C=NULL;
 	struct matrix* Control=NULL;
-
+	int code_error=OK;
 	if(reader(&A,file1)) return BAD;
 	if (type!=INV)
 	{
@@ -69,10 +68,11 @@ int check(char * file1, char* file2, char* answer, int type)
 
 	switch(type)
 	{
-		case (SUMM): C=summ(A,B); break;
-		case (MULT): C=multiplication(A,B); break;
-		case (INV): C=invert(A); break;
+		case (SUMM): C=summ(A,B,&code_error); break;
+		case (MULT): C=multiplication(A,B,&code_error); break;
+		case (INV): C=invert(A,&code_error); break;
 	}
+	if(code_error!=OK) return BAD;
 
 
 	if(C==NULL) return BAD;
@@ -80,19 +80,10 @@ int check(char * file1, char* file2, char* answer, int type)
 	int Ans=compare(C,Control);
 
 
-	erase(A);
-	erase(B);
-	erase(C);
-	erase(Control);
-
-	if(A)
-		free(A);
-	if(B)
-		free(B);
-	if(C)
-		free(C);
-	if(C)
-		free(Control);
+	A=erase(A);
+	B=erase(B);
+	C=erase(C);
+	Control=erase(Control);
 	return Ans;
 }
 
