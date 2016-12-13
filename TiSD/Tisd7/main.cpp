@@ -64,13 +64,13 @@ void work_with_tree(T *tree)
 
 		cout << "**************************************************************" << endl;
 		cout << "Выберите одно из следующих действий:" << endl;
-		cout << "1: Отобразить дерево (1 способ)" << endl;
-		cout << "2: Отобразить дерево (2 способ)" << endl;
-		cout << "3: Добавить число в дерево" << endl;
-		cout << "4: Удалить число из дерева" << endl;
-		cout << "5: Удалить все вхождения числа в дереве" << endl;
-		cout << "6: Поиск числа" << endl;
-		cout << "7: Закончить работу" << endl;
+		cout << "1: Отобразить дерево" << endl;
+		//cout << "2: Отобразить дерево (2 способ)" << endl;
+		cout << "2: Добавить число в дерево" << endl;
+		cout << "3: Удалить число из дерева" << endl;
+		cout << "4: Удалить все вхождения числа в дереве" << endl;
+		cout << "5: Поиск числа" << endl;
+		cout << "6: Закончить работу" << endl;
 		cin >> a;
 		switch (a)
 		{
@@ -78,14 +78,11 @@ void work_with_tree(T *tree)
 				show(tree);
 				break;
 			case '2':
-				show_as_tree(tree);
-				break;
-			case '3':
 				cout << "Введите число: " << endl;
 				cin >> data;
 					tree->Insert(Data<Tp>(data));
 				break;
-			case '4':
+			case '3':
 				cout << "Введите число: " << endl;
 				cin >> data;
 				if (tree->Remove(Data<Tp>(data)))
@@ -96,19 +93,19 @@ void work_with_tree(T *tree)
 					cout << "Дерево не содержит числа" << endl;
 				}
 				break;
-			case '5':
+			case '4':
 				cout << "Введите число: " << endl;
 				cin >> data;
 				while (tree->Search(Data<Tp>(data)))
 				{ tree->Remove(Data<Tp>(data)); }
 				cout << "Число успешно удалено" << endl;
 				break;
-			case '6':
+			case '5':
 				cout << "Введите число: " << endl;
 				cin >> data;
 				cout << (tree->Search(Data<Tp>(data)) ? "Число есть в дереве" : "Числа нет в дереве") << endl;
 				break;
-			case '7':
+			case '6':
 				return;
 			default:
 				cout << "Команда не найдена";
@@ -211,8 +208,8 @@ void interface()
 		cout << "**************************************************************" << endl;
 		cout << "Выберите одно из следующих действий:" << endl;
 		cout << "0: Загрузить данные из файла" << endl;
-		cout << "1: Работа с bst деревом" << endl;
-		cout << "2: Работа с avl деревом" << endl;
+		cout << "1: Работа с деревом поиска" << endl;
+		cout << "2: Работа с АВЛ деревом" << endl;
 		cout << "3: Работа с хэш таблицей с открытой адресацией" << endl;
 		cout << "4: Работа с хэш таблицей с закрытой адресацией" << endl;
 		cout << "5: Сравнение времени поиска" << endl;
