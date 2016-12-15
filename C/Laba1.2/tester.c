@@ -237,9 +237,6 @@ void test_double_insert_sort()
 
 }
 
-
-
-
 struct struct_t 
 {
 	int int_v;
@@ -329,7 +326,7 @@ void test_struct_insert_sort()
 	char str1[][STR_LEN] = { "ac", "ab", "aa" };
 	double double_v1[] = { 0.1, -1.1, 0.01 };
 	int n1 = sizeof(int_v1) / sizeof(int_v1[0]);
-	
+
 	//array 2
 	int int_v2[] = { 3 };
 	char str2[][STR_LEN] = { "aa" };

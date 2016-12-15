@@ -212,7 +212,7 @@ void mod_insertion_sort(void *adr, const size_t nmemb, const size_t size_of_el,
 int testing(const int *a_st, const int *a_end, const int sort_t)
 {
 
-    unsigned long long t_st, t_end, full_time = 0;;
+    unsigned long long t_st, t_end, full_time = 0;
     int size = a_end - a_st;
 
     if (sort_t == 0)
@@ -253,8 +253,10 @@ int testing(const int *a_st, const int *a_end, const int sort_t)
     }
 
     printf("\nAverage  time : \t%llu\n", full_time / N);
-
 }
+
+
+
 
 
 int read_file(int **array, int *array_length, FILE *file)

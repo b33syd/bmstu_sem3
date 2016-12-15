@@ -7,7 +7,10 @@ tester: tester.o functions.o
 	gcc $(FLAGS) -o $@ $^
 	./$@
 
+data: data.o functions.o
+	gcc $(FLAGS) -o $@ $^ -lm
+
 
 %.o: %.c 
-	gcc  -c $<
+	gcc  -c $< -lm
 

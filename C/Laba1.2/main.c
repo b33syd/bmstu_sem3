@@ -78,8 +78,8 @@ int main(int argc, char **argv)
                 filtered_end=array_end;
             }
 
-			//testing(filtered, filtered_end, 0);
-			//testing(filtered, filtered_end, 1);
+			testing(filtered, filtered_end, 0);
+			testing(filtered, filtered_end, 1);
         
             mod_insertion_sort(filtered, filtered_end - filtered, sizeof(int), compare_int_less);
             printf("Sorted array:\n");
