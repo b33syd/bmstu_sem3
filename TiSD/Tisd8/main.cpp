@@ -152,88 +152,87 @@ void  hand_input()
 }
 int main()
 {
+
+
+	char a, ch;
+
+	cout << endl;
+	cout << "**************************************************************" << endl;
+	cout << "Выберите одно из следующих действий:" << endl;
+	cout << "0: Загрузить граф из файла" << endl;
+	cout << "1: Задать граф" << endl;
+	cout << "2: Закончить работу" << endl;
+	cin >> a;
+	switch (a)
+	{
+		case '0':
+			loader();
+			break;
+		case '1':
+			hand_input();
+			break;
+		case '2':
+			return 0;
+		default:
+			return 0;
+	}
+
 	//Показыватели графов
 	int remove_counter = 0;
 	GraphShower gsh1 = GraphShower("/tmp/f1.data", "/tmp/pic1.png");
 	GraphShower gsh2 = GraphShower("/tmp/f2.data", "/tmp/pic2.png");
-	std::string fname = "/home/alexey/Pictures/qqqq/data1.txt";
-
-	char a, ch;
-	while (true)
+	for (int i = 0; i < n; ++i)
 	{
-		cout << endl;
-		cout << "**************************************************************" << endl;
-		cout << "Выберите одно из следующих действий:" << endl;
-		cout << "0: Загрузить граф из файла" << endl;
-		cout << "1: Задать граф" << endl;
-		cout << "2: Закончить работу" << endl;
-		cin >> a;
-		switch (a)
+		for (int j = 0; j < i; ++j)
 		{
-			case '0':
-				loader();
-				break;
-			case '1':
-				hand_input();
-				break;
-			case '2':
-				return 0;
-			default:
-				cout << "Error";
-				continue;
+			if (g2[i][j] == 1)
+				gsh1.printer(i + 1, j + 1);
 		}
-
-		for (int i = 0; i < n; ++i)
-		{
-			for (int j = 0; j < i; ++j)
-			{
-				if (g2[i][j] == 1)
-					gsh1.printer(i + 1, j + 1);
-			}
-			gsh1.print(i + 1);
-		}
-
-		gsh1.show();
-
-
-		mincut();
-
-		for (int i = 0; i < n; ++i)
-		{
-			for (int j = 0; j < i; ++j)
-			{
-				if (g2[i][j] == 1)
-				{
-					bool flag1 = false;
-					bool flag2 = false;
-
-					for (int k = 0; k < best_cut.size(); ++k)
-					{
-						if (i == best_cut[k])
-							flag1 = true;
-						if (j == best_cut[k])
-							flag2 = true;
-					}
-
-					if (flag1 != flag2)
-					{
-						g2[i][j] = 0;
-						cout << "Ребро для удаления " << i + 1 << "-" << j + 1 << endl;
-						remove_counter++;
-					}
-				}
-
-				if (g2[i][j] == 1)
-				{
-					gsh2.printer(i + 1, j + 1);
-				}
-
-
-			}
-			gsh2.print(i + 1);
-		}
-
-		cout << "Всего удалено " << remove_counter << " ребер(a)" << endl;
-		gsh2.show();
+		gsh1.print(i + 1);
 	}
+
+	gsh1.show();
+
+
+	mincut();
+
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < i; ++j)
+		{
+			if (g2[i][j] == 1)
+			{
+				bool flag1 = false;
+				bool flag2 = false;
+
+				for (int k = 0; k < best_cut.size(); ++k)
+				{
+					if (i == best_cut[k])
+						flag1 = true;
+					if (j == best_cut[k])
+						flag2 = true;
+				}
+
+				if (flag1 != flag2)
+				{
+					g2[i][j] = 0;
+					cout << "Ребро для удаления " << i + 1 << "-" << j + 1 << endl;
+					remove_counter++;
+				}
+			}
+
+			if (g2[i][j] == 1)
+			{
+				gsh2.printer(i + 1, j + 1);
+			}
+
+
+		}
+		gsh2.print(i + 1);
+	}
+
+	cout << "Всего удалено " << remove_counter << " ребер(a)" << endl;
+	gsh2.show();
+	best_cut.empty();
+
 }
