@@ -1,0 +1,35 @@
+Dr. Memory version 1.9.0 build 4 built on Oct  2 2015 13:13:14
+Dr. Memory results for pid 6048: "main.exe"
+Application cmdline: "main.exe"
+Recorded 116 suppression(s) from default C:\Program Files (x86)\Dr. Memory\bin\suppress-default.txt
+
+Error #1: LEAK 8 direct bytes 0x00cd0dd8-0x00cd0de0 + 16 indirect bytes
+# 0 replace_malloc               [d:\drmemory_package\common\alloc_replace.c:2537]
+# 1 create_node                  [C:\Users\Student\Documents\RK2/list.c:8]
+# 2 summa                        [C:\Users\Student\Documents\RK2/main.c:37]
+# 3 main                         [C:\Users\Student\Documents\RK2/main.c:79]
+
+===========================================================================
+FINAL SUMMARY:
+
+DUPLICATE ERROR COUNTS:
+
+SUPPRESSIONS USED:
+
+ERRORS FOUND:
+      0 unique,     0 total unaddressable access(es)
+      0 unique,     0 total uninitialized access(es)
+      0 unique,     0 total invalid heap argument(s)
+      0 unique,     0 total GDI usage error(s)
+      0 unique,     0 total handle leak(s)
+      0 unique,     0 total warning(s)
+      1 unique,     1 total,     24 byte(s) of leak(s)
+      0 unique,     0 total,      0 byte(s) of possible leak(s)
+ERRORS IGNORED:
+      3 potential error(s) (suspected false positives)
+         (details: C:\Users\Student\AppData\Roaming\Dr. Memory\DrMemory-main.exe.6048.000\potential_errors.txt)
+      1 potential leak(s) (suspected false positives)
+         (details: C:\Users\Student\AppData\Roaming\Dr. Memory\DrMemory-main.exe.6048.000\potential_errors.txt)
+      0 unique,     0 total,      0 byte(s) of still-reachable allocation(s)
+         (re-run with "-show_reachable" for details)
+Details: C:\Users\Student\AppData\Roaming\Dr. Memory\DrMemory-main.exe.6048.000\results.txt
