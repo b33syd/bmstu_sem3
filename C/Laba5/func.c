@@ -106,11 +106,9 @@ int digit_len(int num)
 
 char get_n_char(int num,int k)
 {
-	char digits[] = "0123456789";
-
 	int n = (num / (pow(10,k-1)));
 	
-	return digits[n%10];
+	return n%10+'0';
 }
 
 char *printer2(char *q, size_t *size, const int toprint,int *global_counter)
