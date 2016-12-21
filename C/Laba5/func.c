@@ -12,54 +12,21 @@ char *print(char *q, size_t *size,const char ch, int *global_counter)
 	return q;
 }
 
-char *printer3(char *q, size_t *size, const signed short toconvert,int *global_counter)
+char *printer3(char *q, size_t *size, const unsigned short toconvert,int *global_counter)
 {
-	int S = 16;
+	int tmp=toconvert;
 	const char hexDigits[] = "0123456789ABCDEF";
 	char result[] = "0000\0";
-	int array[S];
-	for (int j = 0; j < S; ++j) array[j] = 0;
-
-	int n = abs(toconvert);
-	int t = pow(2, S - 1);
-
-	for (int j = S - 1; j >= 0; --j, t = t / 2)
+	for (int i = 3; i >=0; i--)
 	{
-		if (n >= t)
-		{
-			n -= t;
-			array[S - 1 - j] = 1;
-		}
-	}
-
-
-	if (toconvert < 0)
-	{
-		//дополнительный код
-		for (int j = 0; j < S; ++j)
-			array[j] = array[j] ^ 1;
-
-		//+1
-		int i = S - 1;
-		while (i >= 0)
-		{
-			if (array[i] == 0)
-			{
-				array[i] = 1;
-				break;
-			} else
-				array[i] = 0;
-			i--;
-		}
-	}
-
-	for (int k = 0; k < S - 1; k = k + 4)
-	{
-		int t = array[k] * 8 + array[k + 1] * 4 + array[k + 2] * 2 + array[k + 3];
-		result[k / 4] = hexDigits[t];
+		result[i]=hexDigits[tmp%16]; 
+		tmp=tmp/16;
+		//printf("%d\n",tmp );
+		
 	}
 
 	int flag = 0;
+
 	for (int i = 0; i < 4; ++i)
 	{
 		if (result[i] != '0') flag = 1;
@@ -76,7 +43,11 @@ char *printer3(char *q, size_t *size, const signed short toconvert,int *global_c
 		q=print(q,size,'0',global_counter);
 	}
 	return q;
+
 }
+
+
+
 
 char *printer1(char *q, size_t *size, const char *line,int *global_counter)
 {
@@ -163,19 +134,17 @@ size_t my_vsnprintf(char *buffer, size_t buff_size, const char *format, va_list 
 							if (ch == 'X')
 							{
 								//printf("found X\n");
-								q = printer3(q, &n, (signed short) va_arg(ap, signed int),&global_counter);
+								q = printer3(q, &n, (unsigned short) va_arg(ap, unsigned int),&global_counter);
 
 							} 
 							else
 							{
-								q=print(q,&n,'\\',&global_counter);
+								q=print(q,&n,'%',&global_counter);
 								q=print(q,&n,'h',&global_counter);
 								q=print(q,&n,ch,&global_counter);
 							}
 						}
 						break;
-					default:
-						printf("Not found\n");
 				}
 			}
 		} 

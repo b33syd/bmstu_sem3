@@ -2,7 +2,7 @@ FLAGS := -std=c99   -ggdb -Wall -Werror -pedantic
 
 main: main.o func.o
 	gcc -o $@ $^ -lm
-	./main
+	valgrind ./main
 	
 
 %.o: %.c *.h 

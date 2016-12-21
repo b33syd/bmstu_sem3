@@ -6,9 +6,10 @@
 #include <stdarg.h>
 #include <math.h>
 
+
 char *print(char *q, size_t *size,const char ch, int *global_counter);
 
-char *printer3(char *q, size_t *size, const signed short toconvert,int *global_counter);
+char *printer3(char *q, size_t *size, const unsigned short toconvert,int *global_counter);
 
 char *printer1(char *q, size_t *size, const char *line,int *global_counter);
 
