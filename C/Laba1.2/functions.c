@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "functions.h"
+#include <assert.h>
 
 
 #define BAD_READ -10
@@ -41,12 +42,13 @@ int filer_summ(const int *array, const int *array_end)
 	int full_summ = 0;
 
 	//printf("filer_summ-->\n");
-
+	/*
 	if ((array_end - array) < 0)
 	{
 		//printf("BAD POINTERS in filer_summ exit, %p  %p\n",array,array_end);
 		return BAD_POINTERS;
 	}
+	*/
 
 	while (array != array_end)
 	{
@@ -149,7 +151,11 @@ int compare_double_less(const void *val1, const void *val2)
     double *a = (double *) val1;
     double *b = (double *) val2;
     //printf("EEEEEEEEEEEEEE %lf  %lf\n", *b , *a);
-    return *a - *b;
+    if(*a > *b)
+        return 1;
+    if(*a < *b)
+        return -1;
+    return 0;
 }
 
 
@@ -191,6 +197,9 @@ void mod_insertion_sort(void *adr, const size_t nmemb, const size_t size_of_el,
 {
 	char *array = (char *) adr;
 	char *tmp = malloc(size_of_el);
+	//Проверка на памяти
+	assert(tmp!=NULL);
+
 	char *pos;
 
 	while (array != adr + size_of_el * nmemb)

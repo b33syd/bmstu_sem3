@@ -174,6 +174,90 @@ void test_int_insert_sort()
 		int n = sizeof(in11)/sizeof(in11[0]);
 		printf("int_insert_sort_7 \t%s\n", answer(int_insert_sort(in11, in12, n)));
 	}
+//////////////////////////////////////////
+	{
+		//test 8
+		 // Разнобой и с повтором  
+		int in11[] = { 92, 27, 72, 75, 68, 90, 68, 50, 34, 52, 93, 34};
+		int in12[] = { 92, 27, 72, 75, 68, 90, 68, 50, 34, 52, 93, 34};
+		int n = sizeof(in11)/sizeof(in11[0]);
+		printf("int_insert_sort_8 \t%s\n", answer(int_insert_sort(in11, in12, n)));
+	}
+
+
+	{
+		//test 9
+		//Разнобой без  повторов 
+		int in11[] = { 92, 27, 72, 75, 68, 90 };
+		int in12[] = { 92, 27, 72, 75, 68, 90 };
+		int n = sizeof(in11)/sizeof(in11[0]);
+		printf("int_insert_sort_9 \t%s\n", answer(int_insert_sort(in11, in12, n)));
+	}
+
+
+	{
+		//test 10
+		// Упорядоченные по возрастанию c повтором  
+		int in11[] = { 2, 3, 3, 4, 5 };
+		int in12[] = { 2, 3, 3, 4, 5 };
+		int n = sizeof(in11)/sizeof(in11[0]);
+		printf("int_insert_sort_10 \t%s\n", answer(int_insert_sort(in11, in12, n)));
+	}
+
+
+	{
+		//test 11
+		//Упорядоченные по возрастанию без повторов
+		int in11[] = { 1, 3, 6, 7, 8 };
+		int in12[] = { 1, 3, 6, 7, 8};
+		int n = sizeof(in11)/sizeof(in11[0]);
+		printf("int_insert_sort_11 \t%s\n", answer(int_insert_sort(in11, in12, n)));
+	}
+
+	{
+		//test 12
+		//Упорядоченные по убыванию без повторов
+		int in11[] = { 8, 7, 6, 3, 1 };
+		int in12[] = { 8, 7, 6, 3, 1 };
+		int n = sizeof(in11)/sizeof(in11[0]);
+		printf("int_insert_sort_12 \t%s\n", answer(int_insert_sort(in11, in12, n)));
+	}
+
+	{
+		//test 13
+		//Упорядоченные по убыванию
+		int in11[] = { 8, 7, 3, 3, 1 };
+		int in12[] = { 8, 7, 3, 3, 1 };
+		int n = sizeof(in11)/sizeof(in11[0]);
+		printf("int_insert_sort_13 \t%s\n", answer(int_insert_sort(in11, in12, n)));
+	}
+
+
+	{
+		//test 14
+		//Из двух по возрастанию
+		int in11[] = { 1, 2 };
+		int in12[] = {  1, 2 };
+		int n = sizeof(in11)/sizeof(in11[0]);
+		printf("int_insert_sort_14 \t%s\n", answer(int_insert_sort(in11, in12, n)));
+	}
+
+	{
+		//test 15
+		//Из двух по убыванию
+		int in11[] = { 2, 1 };
+		int in12[] = { 2, 1 };
+		int n = sizeof(in11)/sizeof(in11[0]);
+		printf("int_insert_sort_15 \t%s\n", answer(int_insert_sort(in11, in12, n)));
+	}
+
+	{
+		//test 16
+		int in11[] = { 1 };
+		int in12[] = { 1 };
+		int n = sizeof(in11)/sizeof(in11[0]);
+		printf("int_insert_sort_16 \t%s\n", answer(int_insert_sort(in11, in12, n)));
+	}
 }
 
 
@@ -235,6 +319,16 @@ void test_double_insert_sort()
 	n = sizeof(in71)/sizeof(in71[0]);
 	printf("double_insert_sort_7 \t%s\n", answer(double_insert_sort(in71, in72, n)));
 
+	{
+
+
+		//test 7
+		double in71[] = { 0.7, 0.8 };
+		double in72[] = { 0.7, 0.8 };
+		n = sizeof(in71)/sizeof(in71[0]);
+		printf("double_insert_sort_8 \t%s\n", answer(double_insert_sort(in71, in72, n)));
+
+	}
 }
 
 struct struct_t 
