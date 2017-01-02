@@ -1,0 +1,51 @@
+35. inline-функции.
+
+1. inline – пожелание компилятору заменить вызовы функции последовательной вставкой кода самой функции.
+	inline-функции по-другому называют встраиваемыми или подставляемыми.
+
+	inline double average(double a, double b)
+	{
+	    return (a + b) / 2;
+	}
+
+
+	В С99 inline означает, что определение функции предоставляется только для  подстановки и где-то в программе должно быть другое такое же определение этой же функции.
+
+	inline int add(int a, int b) {return a + b;}
+
+	int main(void)
+	{
+	    int i = add(4, 5);
+
+	    return i;
+	}
+	// main.c:(.text+0x1e): undefined reference to `add'
+	// collect2.exe: error: ld returned 1 exit status
+
+
+2.Способы исправления проблемы «unresolved reference»
+
+	2.1. Использовать ключевое слово static
+			static inline int add(int a, int b) {return a + b;}
+
+			int main(void)
+			{
+			    int i = add(4, 5);
+
+			    return i;
+			}
+
+
+	2.2. Убрать ключевое слово inline из определения функции.
+
+			int add(int a, int b) {return a + b;}
+
+			int main(void)
+			{
+			    int i = add(4, 5);
+
+			    return i;
+			}
+			Компилятор «умный» :), сам разберется.
+
+	3.3. Добавить еще одно такое же не-inline определение функции где-нибудь в программе.
